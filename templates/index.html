@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <title>Accueil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/variables.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-sheet-accueil.css')}}">
+</head>
+
+<body>
+    <div class = "centre">
+    <a href="{{ url_for('tout') }}"><h1>Eur<r>ê</r>ka</h1></a>
+    <h2>Le <r>savoir</r> à portée de main</h2>
+    <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
+        <input id="searchbar" type="text" name="search" placeholder="Recherche">
+    </form>
+</div>
+
+</body>
+
+</html>
