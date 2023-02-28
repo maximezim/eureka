@@ -20,6 +20,16 @@
     <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
         <input id="searchbar" type="text" name="search" placeholder="Recherche">
     </form>
+    <div class="boxes">
+        {% for i in range(3, 6) %}
+        <a href="{{ url_for('annee', annee=i) }}">
+          <div class="box">
+                {{i}}A
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      
 </div>
 
 </body>

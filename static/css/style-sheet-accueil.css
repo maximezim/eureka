@@ -7,7 +7,6 @@ body {
     background: var(--dark-col1);
     align-items: center;
     justify-content: center;
-    
     margin: 0;
 }
 
@@ -97,3 +96,28 @@ span,
 a:link {
     text-decoration: none
 }
+
+.boxes {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vh;
+  }
+  
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-col1);
+    color: var(--dark-col1);
+    width: 15vw;
+    height: 5vw;
+    margin: 0 1vw;
+    border-radius: 5px;
+    font-size: 2vw;
+  }
+  
+  .box:hover {
+    background: var(--dark-col1);
+    color: var(--light-col1);
+  }
+  
