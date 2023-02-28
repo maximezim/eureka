@@ -40,8 +40,15 @@ h1 {
     text-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
 }
 
-h1::selection,
-#searchbar::selection {
+h2 {
+    color: var(--light-col1);
+    font-family: "Yeseva One", cursive;
+    font-size: 4vh;
+    margin-left: 1vh;
+    padding: 0;
+}
+
+::selection {
     background-color: var(--col1);
     color: var(--light-col1);
 }
@@ -89,10 +96,14 @@ a:link {
 }
 
 .logo {
+    display: flex;
+    flex-direction: row;
     width: 50vw;
     height: 5vh;
+    align-items: center;
+    justify-content: left;
+    text-align: left;
     margin: 0;
-    padding: 0;
 }
 
 .boxes {

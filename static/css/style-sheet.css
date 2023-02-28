@@ -1,8 +1,6 @@
 body {
-  height: 100vh;
-  width: 100vw;
-  color: var(--dark-col2);
-  background: var(--light-col1);
+  font-family: 'Montserrat', sans-serif;
+  width : 100vw;
   margin: 0;
 }
 
@@ -15,11 +13,36 @@ header {
   align-items: center;
 }
 
+.centre {
+  display: flex;
+  background: var(--light-col1);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .logo {
+  display: flex;
+  flex-direction: row;
   width: 40vw;
   height: 5vh;
   align-items: center;
+  justify-content: left;
+  text-align: left;
   margin: 0;
+}
+
+h1 {
+  color: var(--light-col1);
+  font-family: "Yeseva One", cursive;
+  font-size: 4vh;
+  margin-left: 1vh;
   padding: 0;
 }
 
@@ -44,7 +67,6 @@ header {
 }
 
 .box {
-  font-family: 'Montserrat', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,52 +102,69 @@ header {
   border-radius:5px;
 }
 
-#searchbar::selection {
+::selection {
+  background-color: var(--col1);
   color: var(--light-col1);
-  background: var(--dark-col1);
 }
 
 a:link, a:visited {
   text-decoration: none;
 }
 
-#listeDocu #etiquette:hover {
+#etiquette:hover {
   box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
   transition: box-shadow 0.2s;
 }
 
+.scroll {
+  width: 100vw;
+  height: 95vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+}
+
 #listeDocu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   list-style-type: none;
   margin: 0;
+  margin-top: 5vh;
   padding: 0;
+  width: 100vw;
   overflow: hidden;
 }
 
 #etiquette {
   background-color: white;
-  margin: 2vw;
-  margin-left: 13vw;
-  margin-right: 13vw;
+  margin: 5vh;
+  margin-top: 0;
+  width: 80vw;
   padding: 1vw;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 5px;
+  text-align: left;
   transition: box-shadow 0.1s;
 }
 
-#etiquette h2 {
-  color: var(--dark-col2);
-  font-family: 'Yeseva One', cursive;
-  margin : 0;
+h2 {
+  color: var(--dark-col1);
+  font-size: large;
+  margin: 0;
+  margin-bottom: 1vh;
   padding: 0;
   font-size: 3vh;
 }
 
-#etiquette h3 {
-  font-family: 'Montserrat', sans-serif;
+h3 {
+  color: var(--dark-col1);
   margin:0;
   padding:0;
   font-size: 2vh;
-  
 }
 
 .deroulant{
@@ -138,14 +177,6 @@ a:link, a:visited {
   color :var(--light-col1);
 }
 
-.material-symbols-outlined {
-font-variation-settings:
-'FILL' 0,
-'wght' 400,
-'GRAD' 0,
-'opsz' 48
-}
-
 /* Navbar styling */
 
 .navbar {
@@ -155,7 +186,7 @@ font-variation-settings:
 }
 
 .navbar-toggle {
-  background-color: #c59894;
+  background-color: var(--dark-col1);
   color: var(--light-col1);
   border: none;
   padding: 10px 15px;
@@ -164,7 +195,7 @@ font-variation-settings:
 }
 
 .navbar-toggle:hover {
-  background-color: #c59894;
+  background-color: var(--dark-col1);
   color: var(--light-col1);
 }
 
@@ -173,7 +204,7 @@ font-variation-settings:
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #c59894;
+  background-color: var(--dark-col1);
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -190,7 +221,6 @@ font-variation-settings:
   padding: 12px 16px;
   font-size: medium;
   cursor: pointer;
-  font-family: 'Yeseva One', cursive;
 }
 
 .dropdown-content {
@@ -198,7 +228,7 @@ font-variation-settings:
   position: absolute;
   top: 0;
   right: 100%;
-  background-color: #c59894;
+  background-color: var(--dark-col1);
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -216,7 +246,7 @@ font-variation-settings:
 }
 
 .dropdown-content a:hover {
-  background-color: #F7C9B6;
+  background-color: var(--col1);
 }
 
 .dropdown:hover .dropdown-content {
@@ -226,4 +256,3 @@ font-variation-settings:
 .navbar:hover .navbar-links {
   display: block;
 }
-

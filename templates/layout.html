@@ -17,11 +17,11 @@
 <body class="fond-menu">
     <header>     
         <div class="logo">
-            <a href="{{ url_for('index') }}">ê</a>
+            <a href="{{ url_for('index') }}"><h1>ê</h1></a>
         </div>
         <div class ="search_bar">
             <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-                <input id="searchbar" type="text" name="search" placeholder="Recherche">
+                <input id="searchbar" type="text" name="search" placeholder="Recherche...">
             </form>
         </div>  
         <div class="boxes">
@@ -32,10 +32,12 @@
                     </div>
                 </a>
             {% endfor %}
-          </div>
-        {% block matieres %}{% endblock %}
+            {% block matieres %}{% endblock %}
+        </div>
     </header>
-    {% block liste %}{% endblock %}
+    <div class = "centre">
+        {% block liste %}{% endblock %}
+    </div>
 </body>
 
 </html>

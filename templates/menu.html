@@ -1,15 +1,17 @@
 {% extends 'layout.html' %}
 
 {% block liste %}
+<div class ="scroll">
     <ul id = 'listeDocu'>
         {% for docu in listeDocu %}
             <li><a href="{{ url_for('static', filename = 'pdf/' + docu[0] + '.pdf') }}"download>
                 <div id ='etiquette'>
-                <h2>{{docu[0]}}.pdf</h2>
-                <br><h3>{{docu[1]}}</h3>
+                    <h2>{{docu[0]}}.pdf</h2>
+                    <h3>{{docu[1]}}</h3>
                 </div>
                 </a>
             </li>
         {% endfor %}
     </ul>
+</div>
 {% endblock %}
