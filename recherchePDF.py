@@ -29,19 +29,30 @@ def recherchePDF(tag):
 
     return myresult
 
-def rechercheListePDF(listeTags):
+def rechercheListePDF(listeTags, intersection=None):
     db = loadDB()
     mycursor = db.cursor()
-
     listeResult = []
-    for tag in listeTags:
-        sql = "SELECT titre, auteur, id_doc FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag = (SELECT id_tag FROM Tags WHERE nom like %s))"
-        val = (tag,)
+    
+    if intersection is None:
+        for tag in listeTags:
+            sql = "SELECT titre, auteur, id_doc FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag = (SELECT id_tag FROM Tags WHERE nom like %s))"
+            val = (tag,)
 
-        mycursor.execute(sql, val)
-        # Fetching all pdf
-        myresult = mycursor.fetchall()
-        listeResult.append(myresult)
+            mycursor.execute(sql, val)
+            # Fetching all pdf
+            myresult = mycursor.fetchall()
+            listeResult.append(myresult)
+    else:
+        # same research but the tag intersection must be a tag of the document
+        for tag in listeTags:
+            sql = "SELECT titre, auteur, id_doc FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag = (SELECT id_tag FROM Tags WHERE nom like %s)) AND id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag = (SELECT id_tag FROM Tags WHERE nom like %s))"
+            val = (tag, intersection)
+
+            mycursor.execute(sql, val)
+            # Fetching all pdf
+            myresult = mycursor.fetchall()
+            listeResult.append(myresult)
     # Closing the connection
     db.close()
 

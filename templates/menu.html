@@ -1,52 +1,15 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
 
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Yeseva+One&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/variables.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-sheet.css')}}">
-    
-</head>
-
-<body class="fond-menu">
-    <header>
-        <a href="{{ url_for('index') }}">
-            <div class="logo">
-                ê
-            </div>
-        </a>
-    <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-        <input id="searchbar" type="text" name="search" placeholder="Recherche">
-    </form>
-    <div class="navbar">
-        <button class="navbar-toggle">Matières</button>
-        <div class="navbar-links">
-          {% for key in listeMatieres.keys() %}
-          {% set val = listeMatieres[key] %}
-          <!-- decode utf-8 -->
-            {% set key = key.encode('latin-1').decode('utf-8') %}
-          <!-- changer index par matiere -->
-            <a href="{{ url_for('rechercheMenu', matiere=val) }}">{{ key }}</a>
-          {% endfor %}
-        </div>
-      </div>
-    </header>
+{% block liste %}
     <ul id = 'listeDocu'>
         {% for docu in listeDocu %}
-            <li>
+            <li><a href="{{ url_for('static', filename = 'pdf/' + docu[0] + '.pdf') }}"download>
                 <div id ='etiquette'>
-                <h2><a href="{{ url_for('static', filename = 'pdf/' + docu[0] + '.pdf') }}"download>{{docu[0]}}.pdf</a></h2>
+                <h2>{{docu[0]}}.pdf</h2>
                 <br><h3>{{docu[1]}}</h3>
                 </div>
+                </a>
             </li>
         {% endfor %}
     </ul>
-</body>
-
-</html>
+{% endblock %}

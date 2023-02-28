@@ -8,9 +8,6 @@ body {
 
 header {
   display: flex;
-  font-family: 'Yeseva One', cursive;
-  text-align: left;
-  font-size: 4vh;
   width: 100vw;
   height: 5vh;
   padding: 0%;
@@ -18,11 +15,59 @@ header {
   align-items: center;
 }
 
+.logo {
+  width: 40vw;
+  height: 5vh;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.boxes {
+  width: 40vw;
+  height: 5vh;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.search_bar {
+  display: flex;
+  height: 5vh;
+  width: 20vw;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.box {
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light-col1);
+  width: 5vw;
+  height: 5vh;
+  padding: 0;
+  margin-right: 2vw;
+  border-radius: 5px;
+  font-size: 2.5vh;
+  transition: text-shadow 0.1s;
+}
+
+.box:hover {
+  font-size: 2.7vh;
+  transition: text-shadow 0.2s;
+}
+
 #searchbar {
   padding-top: 0%;
   margin-top: 0%;
-  width: 50vw;
-  min-width: 50%;
+  width: 30vw;
+  min-width: 20vw;
   height: 1vh;
   min-height: 20px;
   text-align: left;
@@ -40,37 +85,13 @@ header {
   background: var(--dark-col1);
 }
 
-.recherche {
-  display: flex;
-  height:5vh;
-  width:60vw;
-  align-items: center;
-}
-
-.logo {
-  height:5vh;
-  width:20vw;
-  padding-left: 2vw;
-  color: var(--light-col1);
-}
-
-a:link {
+a:link, a:visited {
   text-decoration: none;
-}
-
-#listeDocu a:link {
-  text-decoration: none;
-  color: var(--dark-col1);
-}
-
-#listeDocu a:visited {
-  text-decoration: none;
-  color: var(--dark-col1);
 }
 
 #listeDocu #etiquette:hover {
-  background : white;
-  transition: background 0.5s;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
+  transition: box-shadow 0.2s;
 }
 
 #listeDocu {
@@ -81,13 +102,14 @@ a:link {
 }
 
 #etiquette {
-  border-color: var(--dark-col1);
-  border-style: solid;
-  border-width: 5px;
+  background-color: white;
   margin: 2vw;
+  margin-left: 13vw;
+  margin-right: 13vw;
   padding: 1vw;
-  border-radius: 1vw;
-  transition: background 0.5s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 5px;
+  transition: box-shadow 0.1s;
 }
 
 #etiquette h2 {
@@ -134,7 +156,7 @@ font-variation-settings:
 
 .navbar-toggle {
   background-color: #c59894;
-  color: #F0E1DE;
+  color: var(--light-col1);
   border: none;
   padding: 10px 15px;
   font-size: 11px;
@@ -143,7 +165,7 @@ font-variation-settings:
 
 .navbar-toggle:hover {
   background-color: #c59894;
-  color: #F0E1DE;
+  color: var(--light-col1);
 }
 
 .navbar-links {
@@ -162,7 +184,7 @@ font-variation-settings:
 }
 
 .dropbtn {
-  color: #F0E1DE;
+  color: var(--light-col1);
   background-color: inherit;
   border: none;
   padding: 12px 16px;
@@ -186,7 +208,7 @@ font-variation-settings:
 }
 
 .dropdown-content a {
-  color: #F0E1DE;
+  color: var(--light-col1);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
