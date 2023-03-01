@@ -13,6 +13,37 @@ header {
     align-items: center;
 }
 
+.material-symbols-outlined,
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
+    padding: 0;
+    margin:0;
+    font-size: 2.5vh;
+    transition: font-size 0.1s;
+}
+
+.material-symbols-outlined:hover {
+    background-color: var(--col1);
+    transition: background-color 0.2s;
+}
+
+#logo {
+    font-family: 'Yeseva One', cursive;
+    font-size: 3vh;
+    background-color: var(--col1);
+}
+
+#logo:hover {
+    background-color: var(--light-col1);
+    color: var(--dark-col1);
+    transition: 0.2s;
+  }
+
 .centre {
     display: flex;
     background: var(--light-col1);
@@ -87,8 +118,8 @@ r::selection {
 }
 
 #searchbar:focus {
-    border: 2px solid var(--dark-col1);
-    transition: border 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 8px 24px;
+    transition: box-shadow 0.2s;
 }
 
 a:link {

@@ -3,7 +3,9 @@
 {% block matieres %}
     <div class="navbar">
       {% set anneeCours = annee %}
-        <button class="navbar-toggle">Matières</button>
+        <button class="navbar-toggle"><div id="barre_nav"><span class="material-symbols-outlined">
+          menu
+          </span></div></button>
         <div class="navbar-links">
           {% for i in range(1, 5) %}
             <div class="dropdown">

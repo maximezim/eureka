@@ -1,13 +1,28 @@
-from flask import Flask, url_for, render_template, redirect, request
+from flask import Flask, session, url_for, render_template, redirect, request
 from recherchePDF import recherchePDF, afficheTout, uploadDB, rechercheListePDF
 from fetchPeriode import getDictPeriode
+import mysql.connector
+from dotenv import load_dotenv
+from os import getenv
+load_dotenv()
 
+def loadDB():
+    db = mysql.connector.connect(
+        host = getenv("host_db"),
+        user = getenv("user_db"),
+        password = getenv("password_db"),
+        database = "eureka"
+    )
+
+    return db
 
 app = Flask(__name__)
 
+app.secret_key = 'la_cle_est_secrete'
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", loggedin = session['loggedin'])
 
 @app.route("/search", methods=['POST'])
 def recherche():
@@ -25,7 +40,7 @@ def recherche():
     listeDocu = recherchePDF(tag)
     if tag is None or tag == "":
         listeDocu = afficheTout()
-    return render_template("menu.html", listeDocu = listeDocu, listeMatieres = nameToDb)
+    return render_template("menu.html", listeDocu = listeDocu, listeMatieres = nameToDb, loggedin = session['loggedin'])
 
 @app.route("/recherche")
 def rechercheMenu():
@@ -46,7 +61,7 @@ def rechercheMenu():
     else:
         # perform search without filter
         listeDocu = recherchePDF('')
-    return render_template("menu.html", listeDocu=listeDocu, listeMatieres=nameToDb)
+    return render_template("menu.html", listeDocu=listeDocu, listeMatieres=nameToDb, loggedin = session['loggedin'])
 
 
 @app.route("/search")
@@ -61,12 +76,27 @@ def tout():
             nameToDb[key] = val
     f.close()
     listeDocu = afficheTout()
-    return render_template("menu.html", listeDocu = listeDocu, listeMatieres = nameToDb)
+    return render_template("menu.html", listeDocu = listeDocu, listeMatieres = nameToDb, loggedin = session['loggedin'])
+
+@app.route('/upload', methods = ['GET'])
+def home():
+
+    # Vérifie que l'utilisateur est connecté
+    if session['loggedin']:
+        mat = []
+        for i in range(3, 6):
+            mat.append(getDictPeriode(i))
+
+        # create dictionnary from mat
+        dict = {}
+        for i in range(0, len(mat)):
+            for j in range(0, len(mat[i])):
+                dict.update(mat[i][j])
 
 
-@app.route("/upload", methods=['GET'])
-def getUpload():
-    return render_template("upload.html")
+        return render_template('upload.html', username = session['pseudo'], listeMatieres=dict)
+
+    return redirect(url_for('login'))
 
 @app.route("/upload", methods=['POST'])
 def uploadPost():
@@ -85,8 +115,9 @@ def uploadPost():
     
     annee = request.form['annee']
     type_doc = request.form['type_doc']
+    matiere = request.form['choix']
 
-    uploadDB(file, auteur, tags, description, annee, type_doc)
+    uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
     return redirect(url_for('index'))
 
 @app.route("/annee", methods=['GET'])
@@ -107,9 +138,52 @@ def annee():
     liste = rechercheListePDF(listerecherche, str(annee), matiere)
     # merge all the lists in one
     liste = [item for sublist in liste for item in sublist]
-    return render_template("menuannee.html", listeDocu=liste, listeMatieres=listeMatieres, annee=annee)
+    return render_template("menuannee.html", listeDocu=liste, listeMatieres=listeMatieres, annee=annee, loggedin = session['loggedin'])
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+
+    msg = ''
+
+    # Vérifie que le pseudo et le mot de passe sont corrects
+    if request.method == 'POST' and 'pseudo' in request.form and 'password' in request.form:
+        
+        # Crée les variables pour faciliter la manipulation
+        pseudo = request.form['pseudo']
+        password = request.form['password']
+
+        db = loadDB()
+        mycursor = db.cursor()
+
+        # Vérifie que le compte existe
+        sql = "SELECT * FROM Utilisateurs WHERE Pseudo = %s AND Password = %s"
+        val = (pseudo, password,)
+        mycursor.execute(sql, val)
+        
+        # Récupère le résultat de la requête
+        utilisateur = mycursor.fetchone()
+
+        # Si le compte existe
+        if utilisateur:
+            # Crée les données de session
+            session['loggedin'] = True
+            session['pseudo'] = utilisateur[0]
+
+            return redirect(url_for('home'))
 
 
+    msg = "Nom d'utilisateur ou mot de passe invalide."
+ 
+    return render_template('login.html', msg = msg)
+
+@app.route('/logout')
+def logout():
+
+    # Supprime les données de session
+    session['loggedin'] = False
+    session.pop('pseudo', None)
+
+    return render_template('index.html', loggedin = session['loggedin'])
 
 if __name__ == "__main__" :
     app.run(host="0.0.0.0",port=80,debug=True)

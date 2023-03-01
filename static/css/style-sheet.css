@@ -46,6 +46,37 @@ h1 {
   padding: 0;
 }
 
+.log,
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
+    padding: 0;
+    margin:0;
+    font-size: 2.5vh;
+    transition: font-size 0.1s;
+}
+
+#logo {
+  font-family: 'Yeseva One', cursive;
+  font-size: 3vh;
+  background-color: var(--col1);
+}
+
+#logo:hover {
+  background-color: var(--light-col1);
+  color: var(--dark-col1);
+  transition: 0.2s;
+}
+
+.log:hover {
+  background-color: var(--col1);
+  transition: background-color 0.2s;
+}
+
 .boxes {
   width: 40vw;
   height: 5vh;
@@ -66,6 +97,7 @@ h1 {
   margin: 0;
 }
 
+#barre_nav, 
 .box {
   display: flex;
   align-items: center;
@@ -77,29 +109,36 @@ h1 {
   margin-right: 2vw;
   border-radius: 5px;
   font-size: 2.5vh;
-  transition: text-shadow 0.1s;
+  transition: font-size 0.1s;
+}
+
+.box {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .box:hover {
   font-size: 2.7vh;
-  transition: text-shadow 0.2s;
+  transition: font-size 0.2s;
 }
 
 #searchbar {
-  padding-top: 0%;
-  margin-top: 0%;
+  font-family: 'Montserrat', sans-serif;
   width: 30vw;
-  min-width: 20vw;
-  height: 1vh;
-  min-height: 20px;
+  height: 2.6vh;
+
+  padding: 0;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin: 0;
+  
   text-align: left;
   border: 0;
   background: var(--light-col1);
   color: var(--dark-col2);
   outline: none;
-  padding-left: 1vw;
-  padding-right: 1vw;
-  border-radius:5px;
+
+  border-radius: 1.3vh;
+  font-size: 1.6vh;
 }
 
 ::selection {
@@ -141,8 +180,8 @@ a:link, a:visited {
 
 #etiquette {
   background-color: white;
-  margin: 5vh;
-  margin-top: 0;
+  margin: 0vh;
+  margin-bottom: 5vh;
   width: 80vw;
   padding: 1vw;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -189,14 +228,15 @@ h3 {
   background-color: var(--dark-col1);
   color: var(--light-col1);
   border: none;
-  padding: 10px 15px;
-  font-size: 11px;
+  padding: 0;
   cursor: pointer;
 }
 
-.navbar-toggle:hover {
-  background-color: var(--dark-col1);
-  color: var(--light-col1);
+.navbar-toggle:hover,
+.dropbtn:hover,
+.dropdown-content a:hover {
+  background-color: var(--col1);
+  transition: background-color 0.2s;
 }
 
 .navbar-links {
@@ -245,14 +285,105 @@ h3 {
   font-size: medium;
 }
 
-.dropdown-content a:hover {
-  background-color: var(--col1);
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .navbar:hover .navbar-links {
   display: block;
 }
+
+
+/* en dessous de cette ligne : 
+css généré par chat gpt
+pour le formulaire upload
+TODO
+*/
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  margin: 0 auto;
+}
+
+input[type="file"],
+input[type="text"],
+fieldset {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+input[type="file"] {
+  margin-top: 1rem;
+}
+
+input[type="text"] {
+  height: 2rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+fieldset {
+  margin-top: 1rem;
+  border: none;
+}
+
+legend {
+  font-weight: bold;
+}
+
+label {
+  margin-left: 0.5rem;
+}
+
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+input[type="submit"] {
+  margin-top: 1rem;
+  background-color: var(--dark-col1);
+  color: var(--light-col1);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover {
+  background-color: var(--col1);
+}
+
+input[name="choix"] {
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
+
+input[name="choix"]:focus {
+  outline: none;
+  background-color: #ddd;
+}
+
+datalist#choix {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+datalist#choix option {
+  padding: 8px 16px;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+datalist#choix option:last-child {
+  border-bottom: none;
+}
+

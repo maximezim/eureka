@@ -1,25 +1,71 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <!-- <link rel="stylesheet" href="{{ url_for('static',filename='css/variables.css')}}"> -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/form.css')}}">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!-- use uploadDB -->
-    <!-- input file, auteur and tags -->
-    <!-- submit -->
+{% extends 'layout.html' %}
+
+{% block Title %}
+    Upload
+{% endblock %}
+
+{% block liste %}
     <form action="{{ url_for('uploadPost') }}" method="POST" enctype="multipart/form-data">
         <input type="file" name="file">
+        <input type="text" name="titre" placeholder="Titre"> 
         <input type="text" name="auteur" placeholder="Auteur">
         <input type="text" name="tags" placeholder="Tags">
         <input type="text" name="description" placeholder="Description"> 
-        <input type="password" name="password" placeholder="Mot de passe">
+
+          <input list="choix" name="choix" placeholder="Matière" autocomplete="off">
+            <datalist id="choix">
+              {% for key, val in listeMatieres.items() %}
+                <option value="{{ val }}"></option>
+              {% endfor %}
+            </datalist>
+        </input>
+
+        <fieldset>
+            <legend>Choix de l'année:</legend>
+        
+            <div>
+              <input type="radio" id="3" name="annee" value="3"
+                     checked>
+              <label for="3">3ème Année</label>
+            </div>
+        
+            <div>
+                <input type="radio" id="4" name="annee" value="4">
+                <label for="4">4ème Année</label>
+              </div>
+        
+              <div>
+                <input type="radio" id="5" name="annee" value="5">
+                <label for="5">5ème Année</label>
+              </div>
+
+              <div>
+                <input type="radio" id="6" name="annee" value="5">
+                <label for="5">Autre</label>
+              </div>
+        </fieldset>
+        <fieldset>
+            <legend>Type:</legend>
+        
+            <div>
+              <input type="radio" id="7" name="type_doc" value="CM"
+                     checked>
+              <label for="7">CM</label>
+            </div>
+        
+            <div>
+                <input type="radio" id="8" name="type_doc" value="TD">
+                <label for="8">TD</label>
+              </div>
+        
+              <div>
+                <input type="radio" id="9" name="type_doc" value="TypeAutre">
+                <label for="9">Autre</label>
+              </div>
+        </fieldset>
         <input type="submit" value="Upload">
     </form>
+{% endblock %}
     
 </body>
 </html>
