@@ -17,36 +17,44 @@
   <body>
     <header>
       <div class="logo">
-        
         <a href="{{ url_for('index') }}">
           <span id="logo">ê</span>
         </a>
-
-        {% if (not loggedin) %}
-          <a href="{{ url_for('login') }}">
-            <span class="material-symbols-outlined">login</span>
-          </a>
-        {% else %}
-          <a href="{{ url_for('logout') }}">
-            <span class="material-symbols-outlined">logout</span>
-          </a>
-        {% endif %}
-
-      </div>
-      <div class="boxes">
         {% for i in range(3, 6) %}
         <a href = "{{ url_for('annee', annee=i) }}">
-          <div class = "box">
+          <div class = "annee">
                 {{i}}A
           </div>
         </a>
         {% endfor %}
       </div>
+
+      <div class="logs">
+        {% if (not loggedin) %}
+          <a href="{{ url_for('login') }}">
+            <div class = "log">
+                <span class="material-symbols-outlined">login</span>
+            </div>
+          </a>
+        {% else %}
+          <a href="{{ url_for('home') }}">
+            <div class = "log">
+                <span class="material-symbols-outlined">upload</span>
+            </div>
+          </a>
+          <a href="{{ url_for('logout') }}">
+            <div class = "log">
+                <span class="material-symbols-outlined">logout</span>
+            </div>
+          </a>
+        {% endif %}
+      </div>
     </header>
+
     <div class = "centre">
       <a href="{{ url_for('tout') }}"><h1>Eur<r>ê</r>ka</h1></a>
       <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-        <input autocomplete="off" id="searchbar" type="text" name="search" placeholder="Recherche...">
+        <input ondrop="return false" autocomplete="off" id="searchbar" type="text" name="search" placeholder="Recherche...">
       </form>
     </div>
   </body>

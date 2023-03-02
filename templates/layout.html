@@ -18,37 +18,42 @@
     <header>     
         <div class="logo">
             <a href="{{ url_for('index') }}">
-                <span id="logo">ê</span>
-              </a>
+              <span id="logo">ê</span>
+            </a>
+            {% for i in range(3, 6) %}
+            <a href = "{{ url_for('annee', annee=i) }}">
+              <div class = "annee">
+                    {{i}}A
+              </div>
+            </a>
+            {% endfor %}
+        </div>
 
-              {% if (not loggedin) %}
+        <div class ="search_bar">
+            <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
+                <input ondrop="return false" autocomplete="off" id="searchbar" type="text" name="search" placeholder="Recherche...">
+            </form>
+        </div> 
+
+        <div class="logs">
+            {% if (not loggedin) %}
               <a href="{{ url_for('login') }}">
                 <div class = "log">
                     <span class="material-symbols-outlined">login</span>
                 </div>
               </a>
-              {% else %}
+            {% else %}
+              <a href="{{ url_for('home') }}">
+                <div class = "log">
+                    <span class="material-symbols-outlined">upload</span>
+                </div>
+              </a>
               <a href="{{ url_for('logout') }}">
                 <div class = "log">
                     <span class="material-symbols-outlined">logout</span>
                 </div>
               </a>
-              {% endif %}
-        </div>
-        <div class ="search_bar">
-            <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-                <input id="searchbar" type="text" name="search" placeholder="Recherche...">
-            </form>
-        </div>  
-        <div class="boxes">
-            {% for i in range(3, 6) %}
-                <a href = "{{ url_for('annee', annee=i) }}">
-                    <div class = "box">
-                        {{i}}A
-                    </div>
-                </a>
-            {% endfor %}
-            {% block matieres %}{% endblock %}
+            {% endif %}
         </div>
     </header>
     <div class = "centre">

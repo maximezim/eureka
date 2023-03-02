@@ -1,0 +1,226 @@
+body {
+    height : 100vh;
+    width : 100vw;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    width: 100vw;
+    height: 5vh;
+    padding: 0%;
+    background-color: var(--dark-col1);
+    align-items: center;
+}
+
+.logs {
+    width: 50vw;
+    height: 5vh;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 0;
+}
+
+.centre {
+    display: flex;
+    background: var(--light-col1);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
+    height: 5vh;
+    align-items: center;
+    justify-content: left;
+    text-align: left;
+    margin: 0;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
+    padding: 0;
+    margin:0;
+    font-family: 'Yeseva One', cursive;
+    font-size: 3vh;
+    background-color: var(--col1);
+}
+
+
+#logo:hover {
+    background-color: var(--light-col1);
+    color: var(--dark-col1);
+    transition: 0.2s;
+}
+
+a:link {
+    text-decoration: none
+}
+
+.log {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
+    padding: 0;
+    margin:0;
+    font-size: 2.5vh;
+    transition: font-size 0.1s;
+}
+
+.log:hover {
+  background-color: var(--col1);
+  transition: background-color 0.2s;
+}
+
+.centre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    padding:0;
+    margin:0;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4vh;
+    font-weight: 700;
+    color: var(--dark-col1);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#depot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2vh;
+}
+
+.bouton {
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    background-color: var(--col1);
+    height: 5vh;
+    padding: 0;
+    margin: 0;
+    font-size: 2vh;
+    transition: background-color 0.1s;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 1vh;
+    cursor: pointer;
+}
+
+.bouton:hover {
+    background-color: var(--dark-col1);
+    transition: background-color 0.2s;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#champs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    margin: 0;
+    padding: 0;
+}
+
+.champ {
+    width:60%;
+    height: 5vh;
+    outline: none;
+    border: none;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    background-color: var(--light-col1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2vh;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 1vh;
+    transition: box-shadow 0.1s;
+}
+
+#selections {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+select {
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    height: 5vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 2vh;
+    color: var(--dark-col1);
+    background-color: var(--light-col1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 1vh;
+    outline: none;
+    cursor: pointer;
+    transition: box-shadow 0.1s;
+}
+
+.champ:hover,
+select:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    transition: box-shadow 0.2s;
+}
+
+#petitSelect {
+    width: 10%;
+}
+
+#grandSelect {
+    width: 30%;
+}
+
+#boutonUpload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5vh;
+}

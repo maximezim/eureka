@@ -13,7 +13,8 @@ header {
     align-items: center;
 }
 
-.material-symbols-outlined,
+.annee,
+.log,
 #logo {
     display: flex;
     align-items: center;
@@ -27,9 +28,16 @@ header {
     transition: font-size 0.1s;
 }
 
-.material-symbols-outlined:hover {
+.annee:hover,
+.log:hover {
     background-color: var(--col1);
     transition: background-color 0.2s;
+}
+
+.annee {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 
 #logo {
@@ -42,7 +50,27 @@ header {
     background-color: var(--light-col1);
     color: var(--dark-col1);
     transition: 0.2s;
-  }
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
+    height: 5vh;
+    align-items: center;
+    justify-content: left;
+    text-align: left;
+    margin: 0;
+}
+
+.logs {
+    width: 50vw;
+    height: 5vh;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 0;
+}
 
 .centre {
     display: flex;
@@ -126,42 +154,3 @@ a:link {
     text-decoration: none
 }
 
-.logo {
-    display: flex;
-    flex-direction: row;
-    width: 50vw;
-    height: 5vh;
-    align-items: center;
-    justify-content: left;
-    text-align: left;
-    margin: 0;
-}
-
-.boxes {
-    width: 50vw;
-    height: 5vh;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    margin-top: 0;
-}
-  
-.box {
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--light-col1);
-    width: 5vw;
-    height: 5vh;
-    padding: 0;
-    margin-right: 2vw;
-    border-radius: 5px;
-    font-size: 2.5vh;
-    transition: text-shadow 0.1s;
-}
-  
-.box:hover {
-    font-size: 2.7vh;
-    transition: text-shadow 0.2s;
-}
