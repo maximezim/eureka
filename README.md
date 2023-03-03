@@ -1,4 +1,4 @@
-# Eureka  
+# Eureka
 
 Site Web ayant pour but d'héberger les cours de la promo
 Les principales fonctions mises en oeuvre sont les suivantes:

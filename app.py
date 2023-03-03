@@ -5,6 +5,8 @@ import mysql.connector
 from dotenv import load_dotenv
 from os import getenv
 import bcrypt
+
+from collections import Counter
 load_dotenv()
 
 def loadDB():
@@ -33,7 +35,17 @@ def index():
 def recherche():
     tag = request.form['search']
     if tag is not None and tag != "":
-        return render_template("menu.html", listeDocu = recherchePDF(tag), loggedin = loggedin())
+        # split tags by space
+        tag = tag.split(" ")
+        docs = []
+        for t in tag:
+            docs.append(recherchePDF(str(t)))
+        print(docs)
+        docs = [item for sublist in docs for item in sublist]
+        docs = [item for items, c in Counter(docs).most_common()
+                                      for item in [items] * c]
+        docs = list(dict.fromkeys(docs))
+        return render_template("menu.html", listeDocu = docs, loggedin = loggedin())
     return render_template("menu.html", listeDocu = afficheTout(), loggedin = loggedin())
 
 @app.route("/recherche")
