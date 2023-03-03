@@ -10,9 +10,10 @@ Les principales fonctions mises en oeuvre sont les suivantes:
 
 ## TODO
 
-Certificat HTTPS
-Déploiement
-Page de suppression
+Certificat HTTPS  
+Déploiement  
+Page de suppression  
+Vérification vulnérabilités
 
 ## Execution
 
