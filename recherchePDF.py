@@ -12,7 +12,6 @@ def loadDB():
     )
     return db
 
-
 def recherchePDF(tag):
     db = loadDB()
     mycursor = db.cursor()

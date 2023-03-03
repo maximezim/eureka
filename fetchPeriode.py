@@ -14,3 +14,11 @@ def getDictPeriode(annee):
         f.close()
         liste.append(nameToDb)
     return liste
+
+def listeMatAnnees():
+    matieres = []
+    # créé une liste pou chaque période de chaque année dans static
+    for i in range(3, 6):
+        mat = getDictPeriode(i)
+        matieres.append(mat)
+    return matieres
