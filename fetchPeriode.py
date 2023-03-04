@@ -15,6 +15,12 @@ def getDictPeriode(annee):
         liste.append(nameToDb)
     return liste
 
+def getDictAll():
+    liste = []
+    for i in range (3, 6):
+        liste.append(getDictPeriode(i))
+    return liste
+
 def listeMatAnnees():
     matieres = []
     # créé une liste pou chaque période de chaque année dans static

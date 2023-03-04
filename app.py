@@ -1,6 +1,6 @@
 from flask import Flask, session, url_for, render_template, redirect, request
 from recherchePDF import recherchePDF, afficheTout, uploadDB, rechercheListePDF
-from fetchPeriode import getDictPeriode, listeMatAnnees
+from fetchPeriode import getDictAll, listeMatAnnees, getDictPeriode
 import mysql.connector
 from dotenv import load_dotenv
 from os import getenv
@@ -31,7 +31,7 @@ def loggedin() :
 
 @app.route("/")
 def index():
-    return render_template("index.html", listeAnnees = listMatMenu, loggedin = loggedin())
+    return render_template("index.html", listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
 
 @app.route("/search", methods=['POST'])
 def recherche():
@@ -42,53 +42,60 @@ def recherche():
         docs = []
         for t in tag:
             docs.append(recherchePDF(str(t)))
-        print(docs)
         docs = [item for sublist in docs for item in sublist]
         docs = [item for items, c in Counter(docs).most_common()
                                       for item in [items] * c]
         docs = list(dict.fromkeys(docs))
-        return render_template("menu.html", listeDocu = docs, listeAnnees = listMatMenu, loggedin = loggedin())
-    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, loggedin = loggedin())
+        return render_template("menu.html", listeDocu = docs, listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
+    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
 
 @app.route("/recherche")
 def rechercheMenu():
     matiere = request.args.get('matiere')
     if matiere:
         return render_template("menu.html", listeDocu = rechercheListePDF(matiere), listeAnnees = listMatMenu, loggedin = loggedin())
-    return render_template("menu.html", listeDocu=recherchePDF(''), listeAnnees = listMatMenu, loggedin = loggedin())
+    return render_template("menu.html", listeDocu=recherchePDF(''), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
 
 @app.route("/search")
 def tout():
-    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, loggedin = loggedin())
+    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
+
+@app.route("/supp")
+def supp():
+    if ('loggedin' in session):
+        if session['loggedin']:
+            return render_template("suppression.html")
+    return redirect(url_for('login'))
 
 @app.route('/upload', methods = ['GET'])
 def home():
-    if session['loggedin']:
-        mat = []
-        for i in range(3, 6):
-            mat.append(getDictPeriode(i))
-        dict = {}
-        for i in range(0, len(mat)):
-            for j in range(0, len(mat[i])):
-                dict.update(mat[i][j])
-        return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin())
+    if ('loggedin' in session):
+        if session['loggedin']:
+            mat = []
+            for i in range(3, 6):
+                mat.append(getDictPeriode(i))
+            dict = {}
+            for i in range(0, len(mat)):
+                for j in range(0, len(mat[i])):
+                    dict.update(mat[i][j])
+            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin())
     return redirect(url_for('login'))
 
 @app.route("/upload", methods=['POST'])
 def uploadPost():
-    if not session['loggedin']:
-        return redirect(url_for('login'))
-    
-    file = request.files['file']
-    auteur, tags, description, titre = request.form['auteur'], request.form['tags'], request.form['description'], request.form['titre']
-    
-    if titre is not None and titre != "":
-        file.filename = titre + ".pdf"
-    
-    annee, type_doc, matiere = request.form['annee'], request.form['type_doc'], request.form['matiere']
+    if ('loggedin' in session):
+        if session['loggedin']:
+            file = request.files['file']
+            auteur, tags, description, titre = request.form['auteur'], request.form['tags'], request.form['description'], request.form['titre']
+            
+            if titre is not None and titre != "":
+                file.filename = titre + ".pdf"
+            
+            annee, type_doc, matiere = request.form['annee'], request.form['type_doc'], request.form['matiere']
 
-    uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
-    return redirect(url_for('index'))
+            uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
+            return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route("/annee", methods=['GET'])
 def annee():
@@ -96,10 +103,10 @@ def annee():
     matiere = request.args.get('matiere')
     if matiere is None:
         matiere = ""
-    listeMatieres = getDictPeriode(annee)
+    listeMatieres = getDictAll()
     liste = []
     listerecherche = []
-    for dictMatieres in listeMatieres:
+    for dictMatieres in listeMatieres[int(annee) - 3]:
         for value in dictMatieres.items():
             listerecherche.append(value[1])
     liste = rechercheListePDF(listerecherche, str(annee), matiere)
@@ -114,12 +121,8 @@ def login():
 
     # Vérifie que le pseudo et le mot de passe sont corrects
     if request.method == 'POST' and 'pseudo' in request.form and 'password' in request.form:
-        
-        # Crée les variables pour faciliter la manipulation
         pseudo = request.form['pseudo']
-        password = request.form['password']
-
-        password = password.encode('utf-8')
+        password = (request.form['password']).encode('utf-8')
         salt = bcrypt.gensalt()
         password = bcrypt.hashpw(password, salt)
         
@@ -130,14 +133,17 @@ def login():
         mycursor.execute(sql, val)
         # Récupère le résultat de la requête
         utilisateur = mycursor.fetchone()
-        utilisateur = utilisateur[0]
+        utilisateur = utilisateur[0] if utilisateur else None
+        if utilisateur is None:
+            msg = "Nom d'utilisateur ou mot de passe invalide."
+            return render_template('login.html', msg = msg)
         utilisateur = utilisateur.encode('utf-8')
         utilisateur = bcrypt.hashpw(utilisateur, salt)
         if utilisateur == password:
             # Crée les données de session
             session['loggedin'] = True
             session['pseudo'] = utilisateur[0]
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
 
         else :
             msg = "Nom d'utilisateur ou mot de passe invalide."
@@ -150,7 +156,7 @@ def logout():
     session.pop('loggedin', None)
     session.pop('pseudo', None)
 
-    return render_template('index.html', loggedin = False)
+    return render_template('index.html', listeMatieres = getDictAll(), loggedin = False)
 
 if __name__ == "__main__" :
     app.run(host="0.0.0.0",port=80,debug=True)

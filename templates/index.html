@@ -17,16 +17,37 @@
   <body>
     <header>
       <div class="logo">
-        <a href="{{ url_for('index') }}">
-          <span id="logo">ê</span>
-        </a>
-        {% for i in range(3, 6) %}
-        <a href = "{{ url_for('annee', annee=i) }}">
-          <div class = "annee">
-                {{i}}A
-          </div>
-        </a>
-        {% endfor %}
+        {% block matieres %}{% endblock %}
+          <a href="{{ url_for('index') }}">
+            <span id="logo">ê</span>
+          </a>
+          {% for i in range(3, 6) %}
+            <div class="navbar">
+              {% set anneeCours = i %}
+              <a href = "{{ url_for('annee', annee=i) }}">
+                <button class="navbar-toggle">
+                  <div id="barre_nav"><span class="annee">
+                    {{i}}A
+                  </span></div>
+                </button>
+              </a>
+              <div class="navbar-links">
+                {% for j in range(1, 5) %}
+                  <div class="dropdown">
+                    <button class="dropbtn">P{{ j }}</button>
+                    <div class="dropdown-content">
+                      {% for key, val in listeMatieres[i-3][j-1].items() %}
+                        <!-- decode utf-8 -->
+                        {% set key = key.encode('latin-1').decode('utf-8') %}
+                        <!-- changer index par matiere -->
+                        <a href="{{ url_for('annee', annee=anneeCours, matiere=val) }}">{{ key }}</a>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
       </div>
 
       <div class="logs">
@@ -37,6 +58,11 @@
             </div>
           </a>
         {% else %}
+        <a href="{{ url_for('supp') }}">
+          <div class = "log">
+              <span class="material-symbols-outlined">delete</span>
+          </div>
+        </a>
           <a href="{{ url_for('home') }}">
             <div class = "log">
                 <span class="material-symbols-outlined">upload</span>
@@ -47,6 +73,7 @@
                 <span class="material-symbols-outlined">logout</span>
             </div>
           </a>
+          
         {% endif %}
       </div>
     </header>
