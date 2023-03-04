@@ -224,3 +224,10 @@ select:hover {
     justify-content: center;
     padding-top: 5vh;
 }
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2vh;
+    font-weight: 700;
+    color: var(--col1);
+}

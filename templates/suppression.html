@@ -29,22 +29,41 @@
                   <span class="material-symbols-outlined">login</span>
               </div>
             </a>
-          {% else %}
-            <a href="{{ url_for('home') }}">
-              <div class = "log">
-                  <span class="material-symbols-outlined">upload</span>
-              </div>
-            </a>
-            <a href="{{ url_for('logout') }}">
-              <div class = "log">
-                  <span class="material-symbols-outlined">logout</span>
-              </div>
-            </a>
+            {% else %}
             <a href="{{ url_for('supp') }}">
+              <div class = "log">
+                  <span class="material-symbols-outlined">delete</span>
+              </div>
+            </a>
+              <a href="{{ url_for('home') }}">
                 <div class = "log">
-                    <span class="material-symbols-outlined">trash</span>
+                    <span class="material-symbols-outlined">upload</span>
                 </div>
               </a>
-          {% endif %}
+              <a href="{{ url_for('logout') }}">
+                <div class = "log">
+                    <span class="material-symbols-outlined">logout</span>
+                </div>
+              </a>
+            {% endif %}
         </div>
     </header>
+
+    <div class = "centre">
+        <h1>Suppression</h1>
+        <form action="{{ url_for('suppPost') }}" method="POST" enctype="multipart/form-data">
+          <div id="champs">
+            <input type="text" name="titre" placeholder="Titre" class="champ" required> 
+          </div>
+          <div id="boutonUpload">
+            <input type="submit" value="Supprimer" class="bouton">
+          </div>
+        </form>
+        <div id="msg">
+            {% if (msg != "") %}
+              <h2>{{msg}}</h2>
+            {% endif %}
+          </div>
+      </div>
+    </body>
+  </html>

@@ -30,17 +30,22 @@
               </div>
             </a>
           {% else %}
-            <a href="{{ url_for('home') }}">
+            <a href="{{ url_for('supp') }}">
               <div class = "log">
-                  <span class="material-symbols-outlined">upload</span>
+                  <span class="material-symbols-outlined">delete</span>
               </div>
             </a>
-            <a href="{{ url_for('logout') }}">
-              <div class = "log">
-                  <span class="material-symbols-outlined">logout</span>
-              </div>
-            </a>
-          {% endif %}
+              <a href="{{ url_for('home') }}">
+                <div class = "log">
+                    <span class="material-symbols-outlined">upload</span>
+                </div>
+              </a>
+              <a href="{{ url_for('logout') }}">
+                <div class = "log">
+                    <span class="material-symbols-outlined">logout</span>
+                </div>
+              </a>
+            {% endif %}
         </div>
     </header>
     <div class = "centre">
@@ -54,7 +59,6 @@
             <p>Aucun fichier sélectionné</p>
           </div>
         </div>
-        
         <div id="champs">
           <input type="text" name="titre" placeholder="Titre" class="champ" required> 
           
@@ -89,6 +93,11 @@
           <input type="submit" value="Upload" class="bouton">
         </div>
       </form>
+      <div id="msg">
+        {% if (msg != "") %}
+          <h2>{{msg}}</h2>
+        {% endif %}
+      </div>
     </div>
   </body>
 </html>

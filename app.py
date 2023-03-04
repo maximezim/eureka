@@ -1,5 +1,5 @@
 from flask import Flask, session, url_for, render_template, redirect, request
-from recherchePDF import recherchePDF, afficheTout, uploadDB, rechercheListePDF
+from recherchePDF import recherchePDF, afficheTout, uploadDB, rechercheListePDF, deletePDF
 from fetchPeriode import getDictAll, listeMatAnnees, getDictPeriode
 import mysql.connector
 from dotenv import load_dotenv
@@ -21,7 +21,7 @@ def loadDB():
     return db
 
 app = Flask(__name__)
-app.secret_key = 'la_cle_est_secrete'
+app.secret_key = getenv("secret_key")
 
 def loggedin() :
     if (session.__contains__('loggedin')) :
@@ -60,13 +60,6 @@ def rechercheMenu():
 def tout():
     return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin())
 
-@app.route("/supp")
-def supp():
-    if ('loggedin' in session):
-        if session['loggedin']:
-            return render_template("suppression.html")
-    return redirect(url_for('login'))
-
 @app.route('/upload', methods = ['GET'])
 def home():
     if ('loggedin' in session):
@@ -78,7 +71,7 @@ def home():
             for i in range(0, len(mat)):
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
-            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin())
+            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg ="")
     return redirect(url_for('login'))
 
 @app.route("/upload", methods=['POST'])
@@ -94,7 +87,32 @@ def uploadPost():
             annee, type_doc, matiere = request.form['annee'], request.form['type_doc'], request.form['matiere']
 
             uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
-            return redirect(url_for('index'))
+
+            mat = []
+            for i in range(3, 6):
+                mat.append(getDictPeriode(i))
+            dict = {}
+            for i in range(0, len(mat)):
+                for j in range(0, len(mat[i])):
+                    dict.update(mat[i][j])
+
+            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = titre + " uploadé")
+    return redirect(url_for('login'))
+
+@app.route("/supp", methods=['GET'])
+def supp():
+    if ('loggedin' in session):
+        if session['loggedin']:
+            return render_template("suppression.html", msg = "", loggedin = loggedin())
+    return redirect(url_for('login'))
+
+@app.route("/supp", methods=['POST'])
+def suppPost():
+    if ('loggedin' in session):
+        if session['loggedin']:
+            titre = request.form['titre']
+            deletePDF(titre)
+            return render_template("suppression.html", msg = titre + " supprimé", loggedin = loggedin())
     return redirect(url_for('login'))
 
 @app.route("/annee", methods=['GET'])
