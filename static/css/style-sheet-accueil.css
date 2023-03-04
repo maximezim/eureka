@@ -1,4 +1,5 @@
 body {
+    font-family: 'Montserrat', sans-serif;
     height : 100vh;
     width : 100vw;
     margin: 0;
@@ -13,7 +14,6 @@ header {
     align-items: center;
 }
 
-.annee,
 .log,
 #logo {
     display: flex;
@@ -25,19 +25,23 @@ header {
     padding: 0;
     margin:0;
     font-size: 2.5vh;
-    transition: font-size 0.1s;
+    transition: background-color 0.1s;
 }
 
-.annee:hover,
 .log:hover {
     background-color: var(--col1);
     transition: background-color 0.2s;
 }
 
 .annee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
     font-family: 'Montserrat', sans-serif;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    font-size: 2.5vh;
 }
 
 #logo {
@@ -154,3 +158,94 @@ a:link {
     text-decoration: none
 }
 
+/* Navbar styling */
+
+#barre_nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-col1);
+    width: 5vh;
+    height: 5vh;
+    padding: 0;
+    border-radius: 5px;
+    font-size: 2.5vh;
+    transition: font-size 0.1s;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .navbar-toggle {
+    background-color: var(--dark-col1);
+    color: var(--light-col1);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    padding-left: 1vw;
+    padding-right: 1vw;
+  }
+  
+  .navbar-toggle:hover,
+  .dropbtn:hover,
+  .dropdown-content a:hover {
+    background-color: var(--col1);
+    transition: background-color 0.2s;
+  }
+  
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--dark-col1);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    width:100%;
+  }
+  
+  .dropbtn {
+    color: var(--light-col1);
+    background-color: inherit;
+    border: none;
+    padding: 12px 16px;
+    font-size: medium;  
+    cursor: pointer;
+    width:100%;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: var(--dark-col1);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content a {
+    color: var(--light-col1);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: medium;
+  }
+  
+  .navbar:hover .navbar-links {
+    display: block;
+  }
