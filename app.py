@@ -118,6 +118,8 @@ def suppPost():
 @app.route("/annee", methods=['GET'])
 def annee():
     annee = request.args.get('annee')
+    if annee not in ["3", "4", "5"]:
+        return redirect(url_for('index'))
     matiere = request.args.get('matiere')
     if matiere is None:
         matiere = ""
