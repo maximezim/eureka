@@ -1,8 +1,8 @@
 Cryptographie : cryptographie
 Automates et langages : automates_langages
-Fondements Sécurité : fondements_securite
+Fondements de la sécurité : fondements_securite
 Développement mobile : dev_mobile
-Graphes et Algorithmes : graphes_algos
+Graphes et algorithmes : graphes_algos
 Infographie : infographie
-Réseaux : reseaux
-Programmation Fonctionnelle : prog_fonctionnelle
+Réseaux TCP/IP : reseaux
+Programmation fonctionnelle : prog_fonctionnelle

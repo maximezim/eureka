@@ -1,7 +1,7 @@
 Analyse : analyse
-Base de données Système : base_de_donnees
+Base de Données Système : base_de_donnees
 Programmation linéaire : programmation_lineaire
 Complexité : complexite
 Infographie : infographie
 Langage C : langage_c
-POO Java : poo_java
+POO / Programmation Java : poo_java

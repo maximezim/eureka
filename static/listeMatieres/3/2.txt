@@ -1,6 +1,6 @@
 Probabilités-Statistiques : probabilites
 Analyse numérique : analyse_numerique
-Architecture : architecture
+Architecture avancée : architecture
 Programmation système : programmation_systeme
-RGPD : rgpd
+Sensibilisation RGPD : rgpd
 Développement Web : developpement_web
