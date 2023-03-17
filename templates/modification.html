@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block titre %}Modification{% endblock %}
+
+{% block main %}
+
+<div class="container container_modification" id="container-modification">
+    <div class="container_title">Modification : {{ titre }}</div>
+    <form class="upload_form" action="{{ url_for('modificationPost', titre = titre, auteur = auteur, description = description) }}" method="POST" enctype="multipart/form-data">
+        <div id="champs">
+            <input type="text" name="newTitre" value="{{ titre }}" placeholder="Titre" class="champ" required> 
+            <input type="text" name="newAuteur" value="{{ auteur }}" placeholder="Auteur" class="champ" required>
+            <input type="text" name="newTags" value="{{ tags }}" placeholder="Tags" class="champ" required>
+            <input type="text-area" value="{{ description }}" name="newDescription" placeholder="Description" class="champ" required>     
+            <div id="selections">
+                <select name="matiere" class="select_item" required>
+                    {% for key, val in listeMatieres.items() %}
+                        <option value="{{ val }}" {% if matiere == val %} selected {% endif %}>{{ val }}</option>
+                    {% endfor %}
+                </select>
+
+                <select class="select_item" name="annee" required>
+                    <option value="3" {% if annee == 3 %} selected {% endif %}>3A</option>
+                    <option value="4" {% if annee == 4 %} selected {% endif %}>4A</option>
+                    <option value="5" {% if annee == 5 %} selected {% endif %}>5A</option>
+                    <option value="6" {% if annee == 6 %} selected {% endif %}>Autre</option>
+                </select>
+
+                <select name="type_doc" class="select_item" required>
+                    <option value="CM" {% if type == 'CM' %} selected {% endif %}>CM</option>
+                    <option value="TD" {% if type == 'TD' %} selected {% endif %}>TD</option>
+                    <option value="Autre" {% if type == 'Autre' %} selected {% endif %}>Autre</option>
+                </select>
+            </div>
+        </div>
+            
+        <div id="boutonUpload">
+            <input type="submit" value="Upload" class="bouton">
+        </div>
+    </form>
+</div>
+
+<script src="{{ url_for('static',filename='js/upload.js')}}"></script>
+
+{% endblock %}

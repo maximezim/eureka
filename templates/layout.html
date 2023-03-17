@@ -6,86 +6,72 @@
     <title>Eurêka - {% block titre %}{% endblock %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Yeseva+One&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/variables.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-sheet.css')}}">
-    
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+    <link rel="icon" type="image/x-icon" href="/static/img/logo.png"/>
+    <script>
+        function toggleTheme() {
+            var theme = document.getElementById('head-theme');
+            var bouton = document.getElementById('icon-theme');
+        
+            if (theme.getAttribute('href') == "{{ url_for('static',filename='css/style.css')}}") {
+                theme.setAttribute('href', "{{ url_for('static',filename='css/style-sombre.css')}}");
+                bouton.setAttribute('class', 'uil uil-sun');
+            } else {
+                theme.setAttribute('href', "{{ url_for('static',filename='css/style.css')}}");
+                bouton.setAttribute('class', 'uil uil-moon');
+            }
+        }
+    </script>
 </head>
 
-<body class="fond-menu">
-    <header>     
-        <div class="logo">
-          {% block matieres %}{% endblock %}
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <nav class="nav_left" id="nav-left">
             <a href="{{ url_for('index') }}">
-              <span id="logo">ê</span>
+                <div class="nav_logo">
+                    ê
+                </div>
             </a>
-            {% for i in range(3, 6) %}
-              <div class="navbar">
-                {% set anneeCours = i %}
-                <a href = "{{ url_for('annee', annee=i) }}">
-                  <button class="navbar-toggle">
-                    <div id="barre_nav"><span class="annee">
-                      {{i}}A
-                    </span></div>
-                  </button>
-                </a>
-                <div class="navbar-links">
-                  {% for j in range(1, 5) %}
-                    <div class="dropdown">
-                      <button class="dropbtn">P{{ j }}</button>
-                      <div class="dropdown-content">
-                        {% for key, val in listeMatieres[i-3][j-1].items() %}
-                          <!-- decode utf-8 -->
-                          {% set key = key.encode('latin-1').decode('utf-8') %}
-                          <!-- changer index par matiere -->
-                          <a href="{{ url_for('annee', annee=anneeCours, matiere=val) }}">{{ key }}</a>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  {% endfor %}
+            {% block matieres %}{% endblock %}
+        </nav>
+        
+        {% block searchbar %}{% endblock %}
+
+        <nav class="nav_right" id="nav-right">
+            <a href="{{ url_for('about') }}">
+                <div class = "icon nav_icon">
+                    <i class="uil uil-info-circle"></i>
                 </div>
-              </div>
-            {% endfor %}
-        </div>
-
-        <div class ="search_bar">
-            <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-                <input ondrop="return false" autocomplete="off" id="searchbar" type="text" name="search" placeholder="Recherche...">
-            </form>
-        </div> 
-
-        <div class="logs">
+            </a>
             {% if (not loggedin) %}
-              <a href="{{ url_for('login') }}">
-                <div class = "log">
-                    <span class="material-symbols-outlined">login</span>
-                </div>
-              </a>
-              {% else %}
-              <a href="{{ url_for('supp') }}">
-                <div class = "log">
-                    <span class="material-symbols-outlined">delete</span>
-                </div>
-              </a>
-                <a href="{{ url_for('home') }}">
-                  <div class = "log">
-                      <span class="material-symbols-outlined">upload</span>
-                  </div>
+                <a href="{{ url_for('login') }}">
+                    <div class = "icon nav_icon">
+                        <i class="uil uil-sign-in-alt"></i>
+                    </div>
+                </a>
+            {% else %}
+                <a href="{{ url_for('upload') }}">
+                    <div class = "icon nav_icon">
+                        <i class="uil uil-file-export"></i>
+                    </div>
                 </a>
                 <a href="{{ url_for('logout') }}">
-                  <div class = "log">
-                      <span class="material-symbols-outlined">logout</span>
-                  </div>
+                    <div class = "icon nav_icon">
+                        <i class="uil uil-sign-out-alt"></i>
+                    </div>
                 </a>
-              {% endif %}
-        </div>
+            {% endif %}
+        </nav>
     </header>
-    <div class = "centre">
-        {% block liste %}{% endblock %}
-    </div>
-</body>
 
-</html>
+    <!-- ===== MAIN ===== -->
+    <main class="main" id="main">
+        <button class="bouton_theme" onclick="toggleTheme()">
+            <i id="icon-theme" class="uil uil-moon"></i>
+        </button>
+        {% block main %}{% endblock %}
+    </main>
+</body>

@@ -1,86 +1,45 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %}
 
-<html lang="fr">
+{% block titre %}Accueil{% endblock %}
 
-  <head>
-      <title>Eurêka - Accueil</title>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Yeseva+One&display=swap" rel="stylesheet"> 
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-      <link rel="stylesheet" href="{{ url_for('static',filename='css/variables.css')}}">
-      <link rel="stylesheet" href="{{ url_for('static',filename='css/style-sheet-accueil.css')}}">
-      <link rel="icon" type="image/x-icon" href="/static/img/logo.png"/>
-  </head>
+{% block matieres %} 
 
-  <body>
-    <header>
-      <div class="logo">
-          <a href="{{ url_for('index') }}" class="bandeau">
-            <span id="logo">ê</span>
-          </a>
-          {% for i in range(3, 6) %}
-            <div class="navbar">
-              {% set anneeCours = i %}
-              <a href = "{{ url_for('annee', annee=i) }}" class="bandeau">
-                <button class="navbar-toggle">
-                  <div id="barre_nav"><span class="annee">
-                    {{i}}A
-                  </span></div>
-                </button>
-              </a>
-              <div class="navbar-links">
-                {% for j in range(1, 5) %}
-                  <div class="dropdown">
-                    <button class="dropbtn">P{{ j }}</button>
-                    <div class="dropdown-content">
-                      {% for key, val in listeMatieres[i-3][j-1].items() %}
-                        <!-- changer index par matiere -->
-                        <a href="{{ url_for('annee', annee=anneeCours, matiere=val) }}">{{ key }}</a>
-                      {% endfor %}
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-            </div>
-          {% endfor %}
-      </div>
-
-      <div class="logs">
-        {% if (not loggedin) %}
-          <a href="{{ url_for('login') }}" class="bandeau">
-            <div class = "log">
-                <span class="material-symbols-outlined">login</span>
-            </div>
-          </a>
-        {% else %}
-        <a href="{{ url_for('supp') }}" class="bandeau">
-          <div class = "log">
-              <span class="material-symbols-outlined">delete</span>
-          </div>
+{% for i in range(3, 6) %}
+    <div class="navbar">
+        {% set anneeCours = i %}
+        <a href = "{{ url_for('annee', annee=i) }}" class="bandeau">
+            <button class="navbar_toggle">
+                <div class="navbar_annee">
+                  <span>{{i}}A</span>
+                </div>
+            </button>
         </a>
-          <a href="{{ url_for('home') }}" class="bandeau">
-            <div class = "log">
-                <span class="material-symbols-outlined">upload</span>
-            </div>
-          </a>
-          <a href="{{ url_for('logout') }}">
-            <div class = "log">
-                <span class="material-symbols-outlined">logout</span>
-            </div>
-          </a>
-        {% endif %}
-      </div>
-    </header>
-
-    <div class = "centre">
-      <a href="{{ url_for('tout') }}"><h1>Eur<r>ê</r>ka</h1></a>
-      <form method = "POST" class="recherche" action="{{ url_for('recherche') }}">
-        <input ondrop="return false" autocomplete="off" id="searchbar" type="text" name="search" placeholder="Recherche...">
-      </form>
+        <div class="navbar_links">
+            {% for j in range(1, 5) %}
+                <div class="dropdown">
+                    <button class="dropbtn">P{{ j }}</button>
+                    <div class="dropdown_content">
+                        {% for key, val in listeMatieres[i-3][j-1].items() %}
+                            <a href="{{ url_for('annee', annee=anneeCours, matiere=val) }}">{{ key }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-  </body>
+{% endfor %}
 
-</html>
+{% endblock %}
+
+{% block main %}
+
+<div class="main_center" id="main-center">
+    <a href="{{ url_for('tout') }}">
+        <div class="index_title" id="index_title">Eur<span class="index_title_alt">ê</span>ka</div>
+    </a>
+    <form method = "POST" class="index_form" action="{{ url_for('recherche') }}">
+        <input class="searchbar index_searchbar" id="index-searchbar" ondrop="return false" autocomplete="off" type="text" name="search" placeholder="Rechercher avec des mots-clés...">
+    </form>
+</div>
+
+{% endblock %}
