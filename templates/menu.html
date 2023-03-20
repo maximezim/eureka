@@ -55,7 +55,7 @@
         {% if listeDocu %}
             {% for docu in listeDocu %}
                 <li class="listedocu_item">
-                    <a href="{{ url_for('static', filename = 'pdf/' + docu[0] + '.pdf') }}" target="_blank">
+                    <a href="{{ url_for('static', filename = 'pdf/' + docu[7] + ' - '' + docu[0] + '.pdf') }}" target="_blank">
                         <div class="listedocu_etiquette" id="listedocu-etiquette">
                             <div class="pastille_titre" id="pastille-titre">
                             {% if docu[4] == 'CM' %}<span class="pastille_cm" id="pastille-cm"></span>

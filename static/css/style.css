@@ -133,6 +133,15 @@ a::selection {
 
 }
 
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--header-height);
+}
+
 .nav_left {
     position: absolute;
     top: 0;
@@ -374,7 +383,7 @@ a::selection {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - 2 * var(--header-height));
     width: 100vw;
 }
 
