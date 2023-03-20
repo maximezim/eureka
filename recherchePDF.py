@@ -16,7 +16,7 @@ def recherchePDF(tag):
     db = loadDB()
     mycursor = db.cursor()
     tag = "%" + tag + "%"
-    sql = "SELECT titre, auteur, matiere, annee, type, description, id_doc FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag IN (SELECT id_tag FROM Tags WHERE nom like %s))"
+    sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag IN (SELECT id_tag FROM Tags WHERE nom like %s))"
     val = (tag,)
 
     mycursor.execute(sql, val)
@@ -31,7 +31,7 @@ def rechercheListePDF(listeTags, annee=0, matiere=""):
     listeResult = []
 
     if annee != 0:
-        sql = "SELECT titre, auteur, matiere, annee, type, description, id_doc FROM Documents WHERE id_doc IN (SELECT id_doc FROM Documents WHERE annee = %s)"
+        sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents WHERE id_doc IN (SELECT id_doc FROM Documents WHERE annee = %s)"
         val = (annee,)
 
     if matiere != "":
@@ -49,7 +49,7 @@ def rechercheListePDF(listeTags, annee=0, matiere=""):
 def afficheTout():
     db = loadDB()
     mycursor = db.cursor()
-    sql = "SELECT titre, auteur, matiere, annee, type, description, id_doc FROM Documents"
+    sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     db.close()
@@ -69,7 +69,7 @@ def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
     tags.append(type_doc)
     tags.append(matiere)
 
-
+    file.save("static/pdf/" + titre + ".pdf")
 
     tags = [tag.lower() for tag in tags]
     tags = list(dict.fromkeys(tags))
@@ -77,20 +77,6 @@ def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
 
     db = loadDB()
     mycursor = db.cursor()
-
-    # get last id_doc in db
-    sql = "SELECT id_doc FROM Documents ORDER BY id_doc DESC LIMIT 1"
-    mycursor.execute(sql)
-    myresult = mycursor.fetchall()
-    if len(myresult) == 0:
-        id_doc = 0
-    else:
-        id_doc = myresult[0][0]+1
-
-    db.commit()
-        
-    
-    file.save("static/pdf/" + id_doc + " - " + titre + ".pdf")
 
     # TEMPORAIRE
     specialite = "ICy"
