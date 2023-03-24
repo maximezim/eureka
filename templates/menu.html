@@ -64,8 +64,13 @@
                             <h1>{{docu[0]}}</h1></div>
                             <h2>{{docu[1]}}</h2>
                             {% set done = [] %}
-                            <h3>{{docu[3]}}A - 
-                                {% for j in range(1, 5) %}
+                            <h3>{% if docu[3] != 6%}
+                                {{docu[3]}}A - 
+                                {% else %}
+                                Autre - 
+                                {% endif %}
+            
+                                {% for j in range(1, 5) if docu[3]!= 6 %}
                                     {% for key, val in listeMatieres[docu[3]-3][j-1].items() %}
                                         {% if docu[2] == val and val not in done %}
                                             {{key}}
@@ -110,4 +115,23 @@
         <p>TD</p>
 
 </div>
+
+<div class="loader_wrapper">
+    <span class="loader_letter1">E</span>
+    <span class="loader_letter2">u</span>
+    <span class="loader_letter3">r</span>
+    <span class="loader_letter4">ê</span>
+    <span class="loader_letter5">k</span>
+    <span class="loader_letter6">a</span>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(window).on('load', function() {
+        setTimeout(function() {
+            $('.loader_wrapper').fadeOut("slow");
+        }, 250);
+    });
+</script>
+
 {% endblock %}

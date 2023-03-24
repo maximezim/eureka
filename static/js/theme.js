@@ -1,11 +1,12 @@
 function toggleTheme() {
     var theme = document.getElementById('head-theme');
+    var bouton = document.getElementById('icon-theme');
 
-    if (theme.getAttribute('href') == "{{ url_for('static',filename='css/style.css')}}") {
-        theme.setAttribute('href', "{{ url_for('static',filename='css/style-sombre.css')}}");
-    } else {
-        theme.setAttribute('href', "{{ url_for('static',filename='css/style.css')}}");
-    }
+    if (document.cookie == "theme=light") document.cookie = "theme=dark; path=/; expires=Thu, 18 Dec 9999 12:00:00 UTC";
+ 
+    else document.cookie = "theme=light;path=/; expires=Thu, 18 Dec 9999 12:00:00 UTC";
+
+    location.reload();
 }
 
-document.getElementById('bouton-theme').addEventListener('change', ()=> toggleTheme());
+document.getElementById("bouton-theme").addEventListener("click", ()=>{toggleTheme()});

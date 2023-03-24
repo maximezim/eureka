@@ -42,6 +42,11 @@
     --z-tooltip: 10;
     --z-fixed: 100;
     --z-modal: 1000;
+
+
+    /* === THEME === */
+
+    
 }
 
 @media screen and (max-width: 968px) {
@@ -218,7 +223,7 @@ a::selection {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: calc(100vh - var(--header-height));
+    height: calc(100vh - 2 * var(--header-height));
 }
 
 .container_title {
@@ -456,6 +461,7 @@ a::selection {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-bottom: 3rem;
 }
 
 .listedocu {
@@ -625,12 +631,27 @@ a::selection {
 
 /* ===== LOGIN ===== */
 
+.container_login {
+    display: flex;
+    flex-direction: row;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    width: 30rem;
+    height: 20rem;
+}
+
+.illustration_login {
+    height: 100%;
+    width: 10%;
+    background-color: var(--col1);
+}
+
 .login {
+    height: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
     padding: 2rem;
 }
 
@@ -698,7 +719,7 @@ a::selection {
     background-color: var(--dark-col1);
     color: var(--lighter-col1);
     font-family: var(--body-font);
-    font-size: var(--h2-font-size);
+    font-size: var(--h3-font-size);
     cursor: pointer;
     transition: background-color 0.1s;
 }
@@ -714,9 +735,27 @@ a::selection {
     color: red;
 }
 
+@media screen and (max-width: 968px) {
+
+    .container_login {
+        width: 20rem;
+        height: 20rem;
+        flex-direction: column;
+    }
+
+    .illustration_login {
+        width:100%;
+        height: 10%;
+    }
+
+    .login {
+        width: 100%;
+        height: 90%;
+    }
+}
 
 
-/* ===== UPLOAD & SUPPRESSION ===== */
+/* ===== UPLOAD ===== */
 
 .container_upload {
     display: flex;
@@ -843,4 +882,75 @@ select:hover {
     font-size: var(--normal-font-size);
     font-weight: var(--font-bold);
     color: var(--col1);
+}
+
+
+/* ===== LOADER ===== */
+
+.loader_wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background: var(--dark-col1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
+  
+.loader_letter1 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--lighter-col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+}
+
+.loader_letter2 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--lighter-col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.05s;
+}
+
+.loader_letter3 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--lighter-col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.10s;
+}
+
+.loader_letter4 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.15s;
+}
+
+.loader_letter5 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--lighter-col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.20s;
+}
+
+.loader_letter6 {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--lighter-col1);
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.25s;
+}
+
+@keyframes bounce {
+  0%{transform: translateY(0px);}
+  100% {transform: translateY(-1em);}
 }
