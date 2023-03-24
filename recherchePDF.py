@@ -121,7 +121,6 @@ def supprimePDF(titre, auteur, description):
     val = (titre, auteur, description,)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
-    print("\n\n AAAAAAAAAAAA -", myresult, "- AAAAAAAAAAAA \n\n")
     id_doc = myresult[0][0]
 
     # supprime les éléments de la table Referencement
@@ -137,8 +136,8 @@ def supprimePDF(titre, auteur, description):
     db.commit()
     db.close()
 
-    if path.exists("/static/pdf/" + titre + ".pdf"):
-        remove(titre + ".pdf")
+    if path.exists("static/pdf/" + titre + ".pdf"):
+        remove("static/pdf/" + titre + ".pdf")
 
 def getInfos(titre, auteur, description):
     db = loadDB()
