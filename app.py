@@ -148,6 +148,13 @@ def annee():
 
     return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=annee, loggedin = loggedin(), theme = cookie)
 
+@app.route("/divers", methods=['GET'])
+def divers():
+    cookie = request.cookies.get('theme', default="light")
+    listeMatieres = getDictAll()
+    liste = rechercheListePDF(["divers", "Autre"], 6)
+    liste = [item for sublist in liste for item in sublist]
+    return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=0, loggedin = loggedin(), theme = cookie)
 
 # UPLOAD
 
@@ -179,7 +186,7 @@ def uploadPost():
             
             annee, type_doc, matiere = request.form['annee'], request.form['type_doc'], request.form['matiere']
 
-            uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
+            res = uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
 
             mat = []
             for i in range(3, 6):
@@ -188,7 +195,9 @@ def uploadPost():
             for i in range(0, len(mat)):
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
-
+            if res == False:
+                return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = "Erreur lors de l'upload", theme = cookie)
+            
             return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = titre + " uploadé", theme = cookie)
     return redirect(url_for('login'))
 
@@ -252,7 +261,12 @@ def about():
     cookie = request.cookies.get('theme', default="light")
     return render_template("about.html", loggedin = loggedin(), theme = cookie)
 
+# 404
 
+@app.errorhandler(404)
+def page_not_found(e):
+    cookie = request.cookies.get('theme', default="light")
+    return render_template('404.html', theme = cookie), 404
 
 if __name__ == "__main__" :
     app.run(host="0.0.0.0",port=80,debug=True)

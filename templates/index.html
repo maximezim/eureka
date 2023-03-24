@@ -7,13 +7,23 @@
 {% for i in range(3, 6) %}
     <div class="navbar">
         {% set anneeCours = i %}
-        <a href = "{{ url_for('annee', annee=i) }}" class="bandeau">
-            <button class="navbar_toggle">
-                <div class="navbar_annee">
-                  <span>{{i}}A</span>
-                </div>
-            </button>
-        </a>
+        <div class="navbar_pc">
+            <a href = "{{ url_for('annee', annee=i) }}" class="bandeau">
+                <button class="navbar_toggle">
+                    <div class="navbar_annee">
+                    <span>{{i}}A</span>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div class="navbar_mobile">
+                <button class="navbar_toggle">
+                    <div class="navbar_annee">
+                    <span>{{i}}A</span>
+                    </div>
+                </button>
+        </div>
         <div class="navbar_links">
             {% for j in range(1, 5) %}
                 <div class="dropdown">
@@ -28,6 +38,11 @@
         </div>
     </div>
 {% endfor %}
+    <div class="bouton_divers_div" id="bouton-divers-div">
+        <a href="{{ url_for('divers') }}">
+            <button class="bouton_divers" id="bouton-divers">Divers</button>
+        </a>
+    </div>
 
 {% endblock %}
 

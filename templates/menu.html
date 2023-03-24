@@ -39,6 +39,11 @@
         </div>
     </div>
     {% endfor %}
+    <div class="bouton_divers_div" id="bouton-divers-div">
+        <a href="{{ url_for('divers') }}">
+            <button class="bouton_divers" id="bouton-divers">Divers</button>
+        </a>
+    </div>
 
 
 {% endblock %}
@@ -60,16 +65,13 @@
                             <div class="pastille_titre" id="pastille-titre">
                             {% if docu[4] == 'CM' %}<span class="pastille_cm" id="pastille-cm"></span>
                             {% elif docu[4] == 'TD' %}<span class="pastille_td" id="pastille-td"></span>
+                            {% else %}<span class="pastille_divers" id="pastille-divers"></span>
                             {% endif %}
                             <h1>{{docu[0]}}</h1></div>
                             <h2>{{docu[1]}}</h2>
                             {% set done = [] %}
                             <h3>{% if docu[3] != 6%}
                                 {{docu[3]}}A - 
-                                {% else %}
-                                Autre - 
-                                {% endif %}
-            
                                 {% for j in range(1, 5) if docu[3]!= 6 %}
                                     {% for key, val in listeMatieres[docu[3]-3][j-1].items() %}
                                         {% if docu[2] == val and val not in done %}
@@ -78,6 +80,9 @@
                                         {% endif %}
                                     {% endfor %}
                                 {% endfor %} - {{docu[4]}}</h3>
+                                {% else %}
+                                Divers </h3>
+                                {% endif %}
                             <p class="listedocu_desc">{{docu[5]}}</p>
                         </div>
                     </a>
@@ -113,6 +118,9 @@
 
         <span class="pastille_td" id="pastille-td"></span>
         <p>TD</p>
+
+        <span class="pastille_divers" id="pastille-divers"></span>
+        <p>Divers</p>
 
 </div>
 

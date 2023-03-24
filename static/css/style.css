@@ -18,6 +18,7 @@
 
     --cm-col: #91AB79;
     --td-col: #7d71ca;
+    --divers-col: #FF6D00;
 
     /* === Police === */
     --body-font: 'Montserrat', sans-serif;
@@ -57,6 +58,7 @@
         --h1-font-size: 1rem;
         --h2-font-size: .9rem;
         --normal-font-size: .8rem;
+        --nav-font-size: 1rem;
     }
 }
 
@@ -367,7 +369,7 @@ a::selection {
     display: block;
 }
 
-.navbar_annee {
+.navbar_annee{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -379,7 +381,41 @@ a::selection {
     z-index: var(--z-modal);
 }
 
+.bouton_divers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--header-height);
+    font-family: var(--body-font);
+    font-size: var(--nav-font-size);
+    font-weight: var(--font-medium);
+    background-color: var(--dark-col1);
+    color: var(--lighter-col1);
+    z-index: var(--z-modal);
+    border: none;
+    padding: 0 1rem 0 1rem ;
+}
 
+.bouton_divers:hover {
+    background-color: var(--col1);
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 968px) {
+    .bouton_divers {
+        padding: 0 .5rem 0 .5rem;
+    }
+
+    .navbar_annee {
+        width: calc(var(--header-height)+ .5rem);
+    }
+
+    .navbar_toggle {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
 
 /* ===== INDEX ===== */
 
@@ -442,7 +478,7 @@ a::selection {
 /* ===== MENU ===== */
 
 .menu_searchbar {
-    width: 50vw;
+    width: 40vw;
     height: 1.5rem;
     border: 0px;
     border-radius:2.5vh;
@@ -501,7 +537,8 @@ a::selection {
 }
 
 .pastille_cm,
-.pastille_td {
+.pastille_td,
+.pastille_divers {
     background-color: var(--cm-col);
     border-radius: 50%;
     width: 1rem;
@@ -511,6 +548,10 @@ a::selection {
 
 .pastille_td {
     background-color: var(--td-col);
+}
+
+.pastille_divers {
+    background-color: var(--divers-col);
 }
 
 @media screen and (max-width: 968px) {
@@ -575,7 +616,7 @@ a::selection {
     top: calc(var(--header-height) + 1rem);
     right: 1rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr;
     align-items: center;
     justify-content: center;
@@ -784,7 +825,7 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-bottom: 2rem;
+    margin: 0;
 }
 
 .bouton {
@@ -796,7 +837,7 @@ input[type="file"] {
     color: var(--lighter-col1);
     background-color: var(--col1);
     height: 2.5rem;
-    font-size: var(--h2-font-size);
+    font-size: var(--normal-font-size);
     transition: background-color 0.1s;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -817,7 +858,7 @@ input[type="file"] {
     width: 100%;
     margin: 0;
     padding: 0;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .champ {
@@ -828,7 +869,7 @@ input[type="file"] {
     background-color: var(--lighter-col1);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     font-family: var(--body-font);
-    font-size: var(--h2-font-size);
+    font-size: var(--normal-font-size);
     padding-left: 1rem;
     padding-right: 1rem;
     border-radius: 1rem;
@@ -838,13 +879,13 @@ input[type="file"] {
 #selections {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 2rem;
+    gap: 1rem;
     width: 60%;
 }
 
 select {
     font-family: var(--body-font);
-    font-size: var(--h2-font-size);
+    font-size: var(--normal-font-size);
     color: var(--text-col1);
     border: none;
     padding: .8rem 1rem .8rem 1rem;
@@ -866,7 +907,7 @@ select:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5vh;
+    padding-top: 1rem;
 }
 
 #boutonUpload::selection,
@@ -953,4 +994,66 @@ select:hover {
 @keyframes bounce {
   0%{transform: translateY(0px);}
   100% {transform: translateY(-1em);}
+}
+
+@media screen and (max-width: 968px) {
+    .loader_letter1, 
+    .loader_letter2,
+    .loader_letter3,
+    .loader_letter4,
+    .loader_letter5,
+    .loader_letter6 {
+        font-size: 4rem;
+    }
+
+    .loader_wrapper {
+        gap: 1rem;
+    }
+}
+
+
+/* === 404 === */
+
+.letter_404_1 {
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+}
+
+.letter_404_2 {
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.05s;
+}
+
+.letter_404_3 {
+    animation: bounce .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) infinite alternate;
+    animation-delay:.10s;
+}
+
+.container_404_erreur {
+    font-family: var(--title-font);
+    font-size: 6rem;
+    color: var(--col1);
+    display: flex;
+    flex-direction: row;
+}
+
+.container_404_text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.container_404_text a {
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    color: var(--col1);
+    text-decoration: none;
+    transition: color 0.2s;
+}   
+
+.container_404_text a:hover {
+    color: var(--light-col1);
+    transition: color 0.2s;
 }
