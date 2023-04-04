@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     {% if theme == "light" %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
-    {% else %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style-sombre.css')}}">
+    {% elif theme == "dark" %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style-sombre.css')}}">
+    {% else %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style-rose.css')}}">
     {% endif %}
     <link rel="icon" type="image/x-icon" href="/static/img/logo.png"/>
     <script src="{{ url_for('static',filename='js/theme.js')}}" defer></script>
@@ -25,9 +26,11 @@
                 </div>
             </a>
             {% block matieres %}{% endblock %}
+
+            {% block searchbar %}{% endblock %}
         </nav>
         
-        {% block searchbar %}{% endblock %}
+        
 
         <nav class="nav_right" id="nav-right">
             <a href="{{ url_for('about') }}">

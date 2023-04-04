@@ -15,6 +15,7 @@
     --lighter-col1: hsl(var(--color1), 20%, 98%);
     --text-col1: hsl(var(--color1), 20%, 10%);
     --title-col1: hsl(var(--color1), 20%, 35%);
+    --background-col1: hsl(var(--color1), 20%, 98%);
 
     --cm-col: #91AB79;
     --td-col: #7d71ca;
@@ -50,7 +51,7 @@
     
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 992px) {
     :root {
         --big-font-size: 5rem;
         --title-font-size: 2.5rem;
@@ -78,7 +79,7 @@ body {
     margin-top: var(--header-height);
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    background-color: var(--lighter-col1);
+    background-color: var(--background-col1);
     color: var(--text-col1);
 }
 
@@ -116,6 +117,7 @@ p {
 
 h1::selection,
 h2::selection,
+h3::selection,
 p::selection,
 b::selection,
 a::selection {
@@ -141,6 +143,8 @@ a::selection {
 }
 
 .footer {
+    position: relative;
+    bottom: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -150,12 +154,24 @@ a::selection {
 }
 
 .nav_left {
-    position: absolute;
+    width: 90%;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: row;
-    height: 100%;
+    align-items: center;
+}
+
+.nav_right {
+    width: 10%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .nav_logo {
@@ -166,15 +182,6 @@ a::selection {
 .nav_logo::selection {
     background-color: var(--lighter-col1);
     color: var(--col1);
-}
-
-.nav_right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
 }
 
 .nav_icon,
@@ -194,7 +201,7 @@ a::selection {
 }
 
 .nav_logo:hover {
-    background-color: var(--lighter-col1);
+    background-color: var(--background-col1);
     color: var(--col1);
     transition: background-color .2s, color .2s;
 }
@@ -203,21 +210,6 @@ a::selection {
     background-color: var(--col1);
     transition: background-color .2s, color .2s;
 }
-
-/* @media screen and (max-width: 900px) {
-    .header {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: var(--col1);
-        padding: 2rem 1.5rem 4rem;
-        box-shadow: 0 -1px 4px rgba(0,0,0,.15);
-        border-radius: 1.5rem 1.5rem 0 0;
-        transition: .3s;
-        z-index: var(--z-fixed);
-    }
-} */
 
 .container {
     display: flex;
@@ -232,7 +224,7 @@ a::selection {
     font-family: var(--body-font);
     font-size: var(--title-font-size);
     font-weight: var(--font-bold);
-    color: var(--dark-col1);
+    color: var(--title-col1);
     margin-bottom: 1rem;
 }
 
@@ -284,14 +276,14 @@ a::selection {
     z-index: var(--z-modal);
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 1200px) {
     .navbar_pc {
         display: none;
     }
 }
 
-@media screen and (min-width: 968px) {
-    .navbar_mobile {
+@media screen and (min-width: 1200px) {
+    .navbar_tab {
         display: none;
     }
 }
@@ -402,7 +394,7 @@ a::selection {
     cursor: pointer;
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 1200px) {
     .bouton_divers {
         padding: 0 .5rem 0 .5rem;
     }
@@ -450,7 +442,7 @@ a::selection {
     font-family: var(--body-font);
     text-align: left;
     color: var(--text-col1);
-    background: var(--lighter-col1);
+    background: var(--background-col1);
     outline: none;
 }
 
@@ -464,11 +456,12 @@ a::selection {
     height: 2.5rem;
     border: 2px solid var(--lighter-col1);
     border-radius: 5rem;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, .2) 0px 4px 12px;
     padding: 0 1rem 0 1rem;
+    background-color: white;
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 992px) {
     .index_searchbar {
         width: 20rem;
     }
@@ -484,9 +477,12 @@ a::selection {
     border-radius:2.5vh;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     padding: 0 1rem 0 1rem;
+    margin-left: 2rem;
+    width: 45vw;
 }
 
-@media screen and (max-width: 968px) {
+
+@media screen and (max-width: 768px) {
     .menu_searchbar{
         display: none;
     }
@@ -512,25 +508,27 @@ a::selection {
 .listedocu_item {
     text-align: left;
     width: 80%;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    border-radius: .5rem;
-    transition: box-shadow .1s;
-}
-
-.listedocu_item:hover {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
-    transition: box-shadow .2s;
+    
 }
 
 .listedocu_etiquette {
     width: 100%;
     height: 100%;
     padding: 1rem;
+    border: 2px solid var(--lighter-col1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    transition: box-shadow .1s;
+    border-radius: .5rem;
+}
+
+.listedocu_etiquette:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    transition: box-shadow .2s;
 }
 
 .pastille_titre {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 49fr;
     align-items: center;
     justify-content: left;
     gap: 1rem;
@@ -543,7 +541,6 @@ a::selection {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    display: inline-block;
 }
 
 .pastille_td {
@@ -554,13 +551,14 @@ a::selection {
     background-color: var(--divers-col);
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 992px) {
     .pastille_titre {
         gap: .5rem;
     }
     
     .pastille_cm,
-    .pastille_td {
+    .pastille_td,
+    .pastille_divers {
     width: .5rem;
     height: .5rem;
     }
@@ -572,19 +570,22 @@ a::selection {
 }
 
 .listedocu_admin {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    justify-content: left;
-    gap: 3rem;
-    width: 100%;
+    justify-content: center;
+    width: 10%;
+    gap: 20%;
     height: 2rem;
-    padding: 1rem;
+    padding: 0 1rem 0 1rem;
     background-color: var(--col1);
     border-radius: 0 0 .5rem .5rem;
 }
 
 .listedocu_admin_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     background-color: transparent;
     color: var(--lighter-col1);
@@ -618,15 +619,15 @@ a::selection {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr;
-    align-items: center;
-    justify-content: center;
     gap: 1rem;
     border-radius: 1rem;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    background-color: var(--background-col1);
+    border: 2px solid var(--lighter-col1);
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 1200px) {
     .legende{
         display: none;
     }
@@ -659,7 +660,6 @@ a::selection {
     background-color: #EFC1CB;
     color: var(--dark-col1);
 }
-
 .insta_link {
     color: var(--col1);
 }
@@ -729,9 +729,10 @@ a::selection {
     background-color: var(--lighter-col1);
     font-family: var(--body-font);
     font-size: var(--h2-font-size);
-    color: var(--dark-col1);
+    color: var(--text-col1);
     transition: border-bottom 0.1s;
     outline: None;
+    background-color: var(--background-col1);
 }
 
 #password:hover, 
@@ -776,7 +777,7 @@ a::selection {
     color: red;
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 992px) {
 
     .container_login {
         width: 20rem;
@@ -830,7 +831,7 @@ input[type="file"] {
 
 .bouton {
     font-family: var(--body-font);
-    border: none;
+    border: 2px solid var(--col1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -838,7 +839,7 @@ input[type="file"] {
     background-color: var(--col1);
     height: 2.5rem;
     font-size: var(--normal-font-size);
-    transition: background-color 0.1s;
+    transition: background-color 0.1s, border 0.1s;
     padding-left: 1rem;
     padding-right: 1rem;
     border-radius: 1rem;
@@ -846,8 +847,9 @@ input[type="file"] {
 }
 
 .bouton:hover {
+    border: 2px solid var(--dark-col1);
     background-color: var(--dark-col1);
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, border 0.2s;
 }
 
 #champs {
@@ -865,8 +867,8 @@ input[type="file"] {
     width:60%;
     height: 3rem;
     outline: none;
-    border: none;
-    background-color: var(--lighter-col1);
+    border: 2px solid var(--background-col1);
+    background-color: var(--background-col1);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
@@ -874,6 +876,7 @@ input[type="file"] {
     padding-right: 1rem;
     border-radius: 1rem;
     transition: box-shadow 0.1s;
+    color: var(--text-col1);
 }
 
 #selections {
@@ -886,15 +889,15 @@ input[type="file"] {
 select {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    color: var(--text-col1);
-    border: none;
     padding: .8rem 1rem .8rem 1rem;
     border-radius: 1rem;
-    background-color: var(--lighter-col1);
+    border: 2px solid var(--background-col1);
+    background-color: var(--background-col1);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     outline: none;
     cursor: pointer;
     transition: box-shadow 0.1s;
+    color: var(--text-col1);
 }
 
 .champ:hover,
@@ -996,7 +999,7 @@ select:hover {
   100% {transform: translateY(-1em);}
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 992px) {
     .loader_letter1, 
     .loader_letter2,
     .loader_letter3,
@@ -1056,4 +1059,17 @@ select:hover {
 .container_404_text a:hover {
     color: var(--light-col1);
     transition: color 0.2s;
+}
+
+
+/* ====== TEST ====== */
+
+.navbar_test {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }

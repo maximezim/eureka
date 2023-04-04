@@ -170,6 +170,7 @@ def upload():
             for i in range(0, len(mat)):
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
+            dict["Autre"] = "divers"
             return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg ="", theme = cookie)
     return redirect(url_for('login'))
 

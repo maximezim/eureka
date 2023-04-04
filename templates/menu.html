@@ -17,7 +17,7 @@
             </a>
         </div>
 
-        <div class="navbar_mobile">
+        <div class="navbar_tab">
                 <button class="navbar_toggle">
                     <div class="navbar_annee">
                     <span>{{i}}A</span>
@@ -61,7 +61,7 @@
             {% for docu in listeDocu %}
                 <li class="listedocu_item">
                     <a href="{{ url_for('static', filename = 'pdf/' + docu[0] + '.pdf') }}" target="_blank">
-                        <div class="listedocu_etiquette" id="listedocu-etiquette">
+                        <div class="listedocu_etiquette" id="listedocu-etiquette" {% if loggedin %} style="border-radius: .5rem .5rem .5rem 0;" {% endif %}>
                             <div class="pastille_titre" id="pastille-titre">
                             {% if docu[4] == 'CM' %}<span class="pastille_cm" id="pastille-cm"></span>
                             {% elif docu[4] == 'TD' %}<span class="pastille_td" id="pastille-td"></span>
@@ -88,15 +88,15 @@
                     </a>
                     {% if loggedin %}
                         <div class="listedocu_admin">
-                            <a href="{{ url_for('suppPost', titre = docu[0], auteur = docu[1], description = docu[5]) }}">
-                                <button class="listedocu_admin_button" type="submit">
+                            <a href="{{ url_for('suppPost', titre = docu[0], auteur = docu[1], description = docu[5]) }}" id="suppression-document">
+                                <div class="listedocu_admin_button" >
                                     <i class="uil uil-trash-alt listedocu_admin_icon"></i>
-                                </button>
+                                </div>
                             </a>
                             <a href="{{ url_for('modification', titre = docu[0], auteur = docu[1], description = docu[5]) }}">
-                                <button class="listedocu_admin_button" type="submit">
+                                <div class="listedocu_admin_button">
                                     <i class="uil uil-edit listedocu_admin_icon"></i>
-                                </button>
+                                </div>
                             </a>
                         </div>
                     {% endif %}
