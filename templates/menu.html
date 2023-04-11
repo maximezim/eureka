@@ -68,7 +68,7 @@
                             {% else %}<span class="pastille_divers" id="pastille-divers"></span>
                             {% endif %}
                             <h1>{{docu[0]}}</h1></div>
-                            <h2>{{docu[1]}}</h2>
+                            <h2>Auteur·e·s : {{docu[1]}} {% if docu[6] != None %} | Source : {{docu[6]}} {% endif %}</h2>
                             {% set done = [] %}
                             <h3>{% if docu[3] != 6%}
                                 {{docu[3]}}A - 
@@ -79,10 +79,11 @@
                                             {% set done = done.append(val) %}
                                         {% endif %}
                                     {% endfor %}
-                                {% endfor %} - {{docu[4]}}</h3>
+                                {% endfor %} - {{docu[4]}}
                                 {% else %}
-                                Divers </h3>
+                                Divers 
                                 {% endif %}
+                                <br> {{docu[7]}} </h3>
                             <p class="listedocu_desc">{{docu[5]}}</p>
                         </div>
                     </a>
@@ -93,7 +94,7 @@
                                     <i class="uil uil-trash-alt listedocu_admin_icon"></i>
                                 </div>
                             </a>
-                            <a href="{{ url_for('modification', titre = docu[0], auteur = docu[1], description = docu[5]) }}">
+                            <a href="{{ url_for('modification', titre = docu[0], auteur = docu[1], matiere = docu[2], annee = docu[3], type_doc = docu[4], description = docu[5], source = docu[6]) }}">
                                 <div class="listedocu_admin_button">
                                     <i class="uil uil-edit listedocu_admin_icon"></i>
                                 </div>

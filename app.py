@@ -83,6 +83,10 @@ def modification():
             titre = request.args.get('titre')
             auteur = request.args.get('auteur')
             description = request.args.get('description')
+            source = request.args.get('source')
+            annee = request.args.get('annee')
+            type_doc = request.args.get('type_doc')
+            matiere = request.args.get('matiere')
             tags = getInfos(titre, auteur, description)
             tagString = tags[0]
             tags.pop(0)
@@ -97,7 +101,7 @@ def modification():
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
 
-            return render_template("modification.html", matiere = 'analyse', type = 'TD', annee = 5, titre = titre, auteur = auteur, description = description, tags = tagString, loggedin = loggedin(), listeMatieres=dict, theme = cookie)
+            return render_template("modification.html", matiere = matiere, type = type_doc, annee = annee, titre = titre, auteur = auteur, description = description, tags = tagString, source = source, loggedin = loggedin(), listeMatieres=dict, theme = cookie)
 
     return redirect(url_for('login'))
 
@@ -115,8 +119,9 @@ def modificationPost():
             annee = request.form['annee']
             type_doc = request.form['type_doc']
             matiere = request.form['matiere']
+            source = request.form['newSource']
 
-            modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, newTags, annee, type_doc, matiere)
+            modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, newTags, annee, type_doc, matiere, source)
 
             return redirect(url_for('recherche'))
 
@@ -180,14 +185,14 @@ def uploadPost():
     if ('loggedin' in session):
         if session['loggedin']:
             file = request.files['file']
-            auteur, tags, description, titre = request.form['auteur'], request.form['tags'], request.form['description'], request.form['titre']
+            auteur, tags, description, titre, source = request.form['auteur'], request.form['tags'], request.form['description'], request.form['titre'], request.form['source']
             
             if titre is not None and titre != "":
                 file.filename = titre + ".pdf"
             
             annee, type_doc, matiere = request.form['annee'], request.form['type_doc'], request.form['matiere']
 
-            res = uploadDB(file, auteur, tags, description, annee, type_doc, matiere)
+            res = uploadDB(file, auteur, tags, description, annee, type_doc, matiere, source)
 
             mat = []
             for i in range(3, 6):

@@ -6,10 +6,11 @@
 
 <div class="container container_modification" id="container-modification">
     <div class="container_title">Modification : {{ titre }}</div>
-    <form class="upload_form" action="{{ url_for('modificationPost', titre = titre, auteur = auteur, description = description) }}" method="POST" enctype="multipart/form-data">
+    <form class="upload_form" action="{{ url_for('modificationPost', titre = titre, auteur = auteur, description = description, source = source, annee = annee, type = type) }}" method="POST" enctype="multipart/form-data">
         <div id="champs">
             <input type="text" name="newTitre" value="{{ titre }}" placeholder="Titre" class="champ" required> 
             <input type="text" name="newAuteur" value="{{ auteur }}" placeholder="Auteur" class="champ" required>
+            <input type="text" name="newSource" value="{{ source }}" placeholder="Source" class="champ" required>
             <input type="text" name="newTags" value="{{ tags }}" placeholder="Tags" class="champ" required>
             <input type="text-area" value="{{ description }}" name="newDescription" placeholder="Description" class="champ" required>     
             <div id="selections">

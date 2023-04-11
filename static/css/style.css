@@ -574,12 +574,19 @@ a::selection {
     grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-content: center;
-    width: 10%;
-    gap: 20%;
+    width: 10rem;
+    gap: 4rem;
     height: 2rem;
     padding: 0 1rem 0 1rem;
     background-color: var(--col1);
     border-radius: 0 0 .5rem .5rem;
+}
+
+@media screen and (max-width: 992px) {
+    .listedocu_admin {
+        width: 6rem;
+        gap: 2rem;
+    }
 }
 
 .listedocu_admin_button {

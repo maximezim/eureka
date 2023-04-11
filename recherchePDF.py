@@ -1,6 +1,8 @@
 import mysql.connector
 from dotenv import load_dotenv
 from os import getenv, path, remove, rename
+from datetime import date
+
 load_dotenv()
 
 def loadDB():
@@ -12,11 +14,19 @@ def loadDB():
     )
     return db
 
+def log(action, titre, utilisateur="Undefined"): 
+    
+    today = date.today()
+    heure = today.strftime("%H:%M:%S")
+
+    with open("static/log/log.txt", "a") as log:
+        log.write(utilisateur + " " + str(today) + " " + heure + " " + action + " " + titre + ".pdf\n")
+
 def recherchePDF(tag):
     db = loadDB()
     mycursor = db.cursor()
     tag = "%" + tag + "%"
-    sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag IN (SELECT id_tag FROM Tags WHERE nom like %s))"
+    sql = "SELECT titre, auteur, matiere, annee, type, description, source, date FROM Documents WHERE id_doc IN (SELECT id_doc FROM Referencement WHERE id_tag IN (SELECT id_tag FROM Tags WHERE nom like %s))"
     val = (tag,)
 
     mycursor.execute(sql, val)
@@ -31,7 +41,7 @@ def rechercheListePDF(listeTags, annee=0, matiere=""):
     listeResult = []
 
     if annee != 0:
-        sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents WHERE id_doc IN (SELECT id_doc FROM Documents WHERE annee = %s)"
+        sql = "SELECT titre, auteur, matiere, annee, type, description, source, date FROM Documents WHERE id_doc IN (SELECT id_doc FROM Documents WHERE annee = %s)"
         val = (annee,)
 
     if matiere != "":
@@ -49,17 +59,19 @@ def rechercheListePDF(listeTags, annee=0, matiere=""):
 def afficheTout():
     db = loadDB()
     mycursor = db.cursor()
-    sql = "SELECT titre, auteur, matiere, annee, type, description FROM Documents"
+    sql = "SELECT titre, auteur, matiere, annee, type, description, source, date FROM Documents"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     db.close()
 
     return myresult
 
-def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
+def uploadDB(file, auteur, tags, description, annee, type_doc, matiere, source):
     db = loadDB()
     mycursor = db.cursor()
-
+    
+    today = date.today()
+    derniereMaj = today.strftime("%d/%m/%Y")
 
     tags = tags.split(";")
     tags = [tag.strip() for tag in tags]
@@ -80,6 +92,8 @@ def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
     tags.append(annee)
     tags.append(type_doc)
     tags.append(matiere)
+    tags.append(auteur)
+    tags.append(source)
 
     file.save("static/pdf/" + titre + ".pdf")
 
@@ -90,8 +104,8 @@ def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
     # TEMPORAIRE
     specialite = "ICy"
 
-    sql = "INSERT INTO Documents (titre, auteur, description, matiere, annee, specialite, type) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    val = (titre, auteur, description, matiere, annee, specialite, type_doc,)
+    sql = "INSERT INTO Documents (titre, auteur, source, description, matiere, annee, specialite, type, date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    val = (titre, auteur, source, description, matiere, annee, specialite, type_doc, derniereMaj,)
 
     mycursor.execute(sql, val)
 
@@ -122,6 +136,8 @@ def uploadDB(file, auteur, tags, description, annee, type_doc, matiere):
 
     db.commit()
     db.close()
+
+    log("Ajout", titre)
     return True
 
 def supprimePDF(titre, auteur, description):
@@ -149,6 +165,8 @@ def supprimePDF(titre, auteur, description):
     if path.exists("static/pdf/" + titre + ".pdf"):
         remove("static/pdf/" + titre + ".pdf")
 
+    log("Suppression", titre)
+
 def getInfos(titre, auteur, description):
     db = loadDB()
     mycursor = db.cursor()
@@ -168,7 +186,7 @@ def getInfos(titre, auteur, description):
 
     return tags
 
-def modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, newTags, annee, type_doc, matiere):
+def modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, newTags, annee, type_doc, matiere, source):
     db = loadDB()
     mycursor = db.cursor()
     sql = "SELECT id_doc FROM Documents WHERE titre = %s AND auteur = %s AND description = %s"
@@ -177,12 +195,15 @@ def modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, 
     myresult = mycursor.fetchall()
     id_doc = myresult[0][0]
 
+    today = date.today()
+    derniereMaj = today.strftime("%d/%m/%Y")
+
     # TEMPORAIRE
     specialite = "ICy"
 
     # modifie Documents
-    sql = "UPDATE Documents SET titre = %s, auteur = %s, description = %s, matiere = %s, annee = %s, type = %s, specialite = %s WHERE id_doc = %s"
-    val = (newTitre, newAuteur, newDescription, matiere, annee, type_doc, specialite, id_doc,)
+    sql = "UPDATE Documents SET titre = %s, auteur = %s, description = %s, matiere = %s, annee = %s, type = %s, specialite = %s, source = %s, date = %s WHERE id_doc = %s"
+    val = (newTitre, newAuteur, newDescription, matiere, annee, type_doc, specialite, source, derniereMaj, id_doc,)
 
     mycursor.execute(sql, val)
 
@@ -194,6 +215,8 @@ def modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, 
     newTags.append(annee)
     newTags.append(type_doc)
     newTags.append(matiere) if matiere != "" else None
+    newTags.append(source) if source != "" else None
+    newTags.append(auteur) if auteur != "" else None
     newTags = [tag.lower() for tag in newTags]
     newTags = list(dict.fromkeys(newTags))
     newTags = [tag for tag in newTags if tag != ""]
@@ -231,3 +254,5 @@ def modifiePDF(titre, auteur, description, newTitre, newAuteur, newDescription, 
     
     db.commit()
     db.close()
+
+    log("Modification", titre)

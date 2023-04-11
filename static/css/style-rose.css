@@ -1,19 +1,7 @@
-@import url("style.css");
+@import url("style-sombre.css");
 
 
 :root {
-    /* === Couleurs === */
     --color1: 347;
-
-    /* Variations */
-    --col1: hsl(var(--color1), 59%, 85%);
-    --dark-col1: hsl(var(--color1), 20%, 20%);
-    --light-col1: hsl(var(--color1), 59%, 80%);
-    --lighter-col1: hsl(var(--color1), 59%, 98%);
-    --text-col1: hsl(var(--color1), 59%, 10%);
-    --title-col1: hsl(var(--color1), 59%, 60%);
-    --background-col1: hsl(var(--color1), 59%, 98%);
-
     --body-font: 'Roboto Mono', monospace;
-    --title-font: 'Roboto Mono', monospace;
 }
