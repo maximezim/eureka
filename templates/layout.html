@@ -1,78 +1,107 @@
 <!DOCTYPE html>
 
 <html lang="fr">
+	<head>
+		<title>Eurêka - {% block titre %}{% endblock %}</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+		/>
+		{% if theme == "light" %}
+		<link
+			id="head-theme"
+			rel="stylesheet"
+			href="{{ url_for('static',filename='css/style.css')}}"
+		/>
+		{% elif theme == "dark" %}
+		<link
+			id="head-theme"
+			rel="stylesheet"
+			href="{{ url_for('static',filename='css/style-sombre.css')}}"
+		/>
+		{% else %}
+		<link
+			id="head-theme"
+			rel="stylesheet"
+			href="{{ url_for('static',filename='css/style-rose.css')}}"
+		/>
+		{% endif %}
+		<link rel="icon" type="image/x-icon" href="/static/img/logo.png" />
+		<script
+			src="{{ url_for('static',filename='js/cookies.js')}}"
+			defer
+		></script>
+	</head>
 
-<head>
-    <title>Eurêka - {% block titre %}{% endblock %}</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    {% if theme == "light" %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
-    {% elif theme == "dark" %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style-sombre.css')}}">
-    {% else %} <link id="head-theme" rel="stylesheet" href="{{ url_for('static',filename='css/style-rose.css')}}">
-    {% endif %}
-    <link rel="icon" type="image/x-icon" href="/static/img/logo.png"/>
-    <script src="{{ url_for('static',filename='js/theme.js')}}" defer></script>
-</head>
+	<body>
+		<!-- ===== HEADER ===== -->
+		<header class="header" id="header">
+			<nav class="nav_left" id="nav-left">
+				<a href="{{ url_for('index') }}">
+					<div class="nav_logo">ê</div>
+				</a>
+				{% block matieres %}{% endblock %} {% block searchbar %}{% endblock %}
+			</nav>
 
-    <body>
+			<nav class="nav_right" id="nav-right">
+				<a href="{{ url_for('about') }}">
+					<div class="icon nav_icon">
+						<i class="uil uil-info-circle"></i>
+					</div>
+				</a>
+				{% if (not loggedin) %}
+				<a href="{{ url_for('login') }}">
+					<div class="icon nav_icon">
+						<i class="uil uil-sign-in-alt"></i>
+					</div>
+				</a>
+				{% else %}
+				<a href="{{ url_for('upload') }}">
+					<div class="icon nav_icon">
+						<i class="uil uil-file-export"></i>
+					</div>
+				</a>
+				<a href="{{ url_for('logout') }}">
+					<div class="icon nav_icon">
+						<i class="uil uil-sign-out-alt"></i>
+					</div>
+				</a>
+				{% endif %}
+			</nav>
+		</header>
 
-    <!-- ===== HEADER ===== -->
-    <header class="header" id="header">
-        <nav class="nav_left" id="nav-left">
-            <a href="{{ url_for('index') }}">
-                <div class="nav_logo">
-                    ê
-                </div>
-            </a>
-            {% block matieres %}{% endblock %}
+		<!-- ===== MAIN ===== -->
+		<main class="main" id="main">
+			<button class="bouton_theme" id="bouton-theme">
+				{% if theme == "light" %}
+				<i id="icon-theme" class="uil uil-moon"></i>
+				{% else %}
+				<i id="icon-theme" class="uil uil-sun"></i>
+				{% endif %}
+			</button>
+			{% block main %}{% endblock %} {% if avertissement == "true" %}
+			<div class="avertissement" id="avertissement">
+				<div class="icon close_icon">
+					<i class="uil uil-times" id="bouton-ferme"></i>
+				</div>
+				<h1>Attention</h1>
+				<p>
+					Les cours varient selon les années, les documents sur le site sont
+					donc susceptibles d'être différents des cours suivis.
+				</p>
+				<p>
+					Nous n'encourageons pas l'absentéisme,
+					<b>la présence en cours reste obligatoire</b>.
+				</p>
+			</div>
+			{% endif %}
+		</main>
 
-            {% block searchbar %}{% endblock %}
-        </nav>
-        
-        
-
-        <nav class="nav_right" id="nav-right">
-            <a href="{{ url_for('about') }}">
-                <div class = "icon nav_icon">
-                    <i class="uil uil-info-circle"></i>
-                </div>
-            </a>
-            {% if (not loggedin) %}
-                <a href="{{ url_for('login') }}">
-                    <div class = "icon nav_icon">
-                        <i class="uil uil-sign-in-alt"></i>
-                    </div>
-                </a>
-            {% else %}
-                <a href="{{ url_for('upload') }}">
-                    <div class = "icon nav_icon">
-                        <i class="uil uil-file-export"></i>
-                    </div>
-                </a>
-                <a href="{{ url_for('logout') }}">
-                    <div class = "icon nav_icon">
-                        <i class="uil uil-sign-out-alt"></i>
-                    </div>
-                </a>
-            {% endif %}
-        </nav>
-    </header>
-
-    <!-- ===== MAIN ===== -->
-    <main class="main" id="main">
-        <button class="bouton_theme" id="bouton-theme">
-            {% if theme == "light" %}
-                <i id="icon-theme" class="uil uil-moon"></i>
-            {% else %}
-                <i id="icon-theme" class="uil uil-sun"></i>
-            {% endif %}
-        </button>
-        {% block main %}{% endblock %}
-    </main>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer" id="footer">
-        <p>2023 Eurêka | INSA Hauts-de-France</p>
-    </footer>
-</body>
+		<!-- ===== FOOTER ===== -->
+		<footer class="footer" id="footer">
+			<p>2023 Eurêka | INSA Hauts-de-France</p>
+		</footer>
+	</body>
+</html>

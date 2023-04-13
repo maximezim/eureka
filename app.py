@@ -34,7 +34,8 @@ def loggedin() :
 @app.route("/")
 def index():
     cookie = request.cookies.get('theme', default="light")
-    return render_template("index.html", listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), theme = cookie)
+    avertissement = request.cookies.get('avertissement', default="true")
+    return render_template("index.html", listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), theme = cookie, avertissement = avertissement)
 
 
 # MENU
@@ -43,6 +44,7 @@ def index():
 def recherche():
     tag = request.form['search']
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     if tag is not None and tag != "":
         # split tags by space
         tag = tag.split(" ")
@@ -53,15 +55,16 @@ def recherche():
         docs = [item for items, c in Counter(docs).most_common()
                                       for item in [items] * c]
         docs = list(dict.fromkeys(docs))
-        return render_template("menu.html", listeDocu = docs, listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie)
+        return render_template("menu.html", listeDocu = docs, listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie, avertissement = avertissement)
     
     
-    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie)
+    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie, avertissement = avertissement)
 
 @app.route("/search")
 def tout():
     cookie = request.cookies.get('theme', default="light")
-    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie)
+    avertissement = request.cookies.get('avertissement', default="true")
+    return render_template("menu.html", listeDocu = afficheTout(), listeAnnees = listMatMenu, listeMatieres = getDictAll(), loggedin = loggedin(), annee = 0, theme = cookie, avertissement = avertissement)
 
 @app.route("/supprime")
 def suppPost():
@@ -78,6 +81,7 @@ def suppPost():
 @app.route('/modification')
 def modification():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     if ('loggedin' in session):
         if session['loggedin']:
             titre = request.args.get('titre')
@@ -101,7 +105,7 @@ def modification():
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
 
-            return render_template("modification.html", matiere = matiere, type = type_doc, annee = annee, titre = titre, auteur = auteur, description = description, tags = tagString, source = source, loggedin = loggedin(), listeMatieres=dict, theme = cookie)
+            return render_template("modification.html", matiere = matiere, type = type_doc, annee = annee, titre = titre, auteur = auteur, description = description, tags = tagString, source = source, loggedin = loggedin(), listeMatieres=dict, theme = cookie, avertissement = avertissement)
 
     return redirect(url_for('login'))
 
@@ -131,6 +135,7 @@ def modificationPost():
 @app.route("/annee", methods=['GET'])
 def annee():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     annee = request.args.get('annee')
 
     if annee not in ["3", "4", "5"]:
@@ -151,21 +156,23 @@ def annee():
     liste = rechercheListePDF(listerecherche, int(annee), matiere)
     liste = [item for sublist in liste for item in sublist]
 
-    return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=annee, loggedin = loggedin(), theme = cookie)
+    return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=annee, loggedin = loggedin(), theme = cookie, avertissement = avertissement)
 
 @app.route("/divers", methods=['GET'])
 def divers():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     listeMatieres = getDictAll()
     liste = rechercheListePDF(["divers", "Autre"], 6)
     liste = [item for sublist in liste for item in sublist]
-    return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=0, loggedin = loggedin(), theme = cookie)
+    return render_template("menu.html", listeDocu=liste, listeMatieres=listeMatieres, annee=0, loggedin = loggedin(), theme = cookie, avertissement = avertissement)
 
 # UPLOAD
 
 @app.route('/upload', methods = ['GET'])
 def upload():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     if ('loggedin' in session):
         if session['loggedin']:
             mat = []
@@ -176,12 +183,13 @@ def upload():
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
             dict["Autre"] = "divers"
-            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg ="", theme = cookie)
+            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg ="", theme = cookie, avertissement = avertissement)
     return redirect(url_for('login'))
 
 @app.route("/upload", methods=['POST'])
 def uploadPost():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
     if ('loggedin' in session):
         if session['loggedin']:
             file = request.files['file']
@@ -202,9 +210,9 @@ def uploadPost():
                 for j in range(0, len(mat[i])):
                     dict.update(mat[i][j])
             if res == False:
-                return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = "Erreur lors de l'upload", theme = cookie)
+                return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = "Erreur lors de l'upload", theme = cookie, avertissement = avertissement)
             
-            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = titre + " uploadé", theme = cookie)
+            return render_template('upload.html', username = session['pseudo'], listeMatieres=dict, loggedin = loggedin(), msg = titre + " uploadé", theme = cookie, avertissement = avertissement)
     return redirect(url_for('login'))
 
 
@@ -213,6 +221,7 @@ def uploadPost():
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
 
     msg = ''
 
@@ -244,7 +253,7 @@ def login():
 
         else :
             msg = "Nom d'utilisateur ou mot de passe invalide."
-    return render_template('login.html', msg = msg, theme = cookie)
+    return render_template('login.html', msg = msg, theme = cookie, avertissement = avertissement)
 
 
 # LOGOUT
@@ -252,12 +261,13 @@ def login():
 @app.route('/logout')
 def logout():
     cookie = request.cookies.get('theme', default="light")
+    avertissement = request.cookies.get('avertissement', default="true")
 
     # Supprime les données de session*
     session.pop('loggedin', None)
     session.pop('pseudo', None)
 
-    return render_template('index.html', listeMatieres = getDictAll(), loggedin = False, theme = cookie)
+    return render_template('index.html', listeMatieres = getDictAll(), loggedin = False, theme = cookie, avertissement = avertissement)
 
 
 # ABOUT
@@ -265,15 +275,16 @@ def logout():
 @app.route('/about')
 def about():
     cookie = request.cookies.get('theme', default="light")
-    return render_template("about.html", loggedin = loggedin(), theme = cookie)
+    avertissement = request.cookies.get('avertissement', default="true")
+    return render_template("about.html", loggedin = loggedin(), theme = cookie, avertissement = avertissement)
 
 # 404
 
 @app.errorhandler(404)
 def page_not_found(e):
     cookie = request.cookies.get('theme', default="light")
-    return render_template('404.html', theme = cookie), 404
+    avertissement = request.cookies.get('avertissement', default="true")
+    return render_template('404.html', theme = cookie, avertissement = avertissement), 404
 
 if __name__ == "__main__" :
     app.run(host="0.0.0.0",port=80,debug=True)
-
