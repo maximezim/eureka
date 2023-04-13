@@ -22,6 +22,7 @@ def scanPDF(pdfFile, titre, auteur, description, apiKey=apiKey):
     response = requests.post(url, files=files, headers=headers)
 
     if response.status_code != 200:
+        supprimePDF(titre, auteur, description)
         return False
     if response.status_code == 200:
         response = response.json()
@@ -37,6 +38,7 @@ def scanPDF(pdfFile, titre, auteur, description, apiKey=apiKey):
 
 
     if response.status_code != 200:
+        supprimePDF(titre, auteur, description)
         return False
     if response.status_code == 200:
         response = response.json()
